@@ -59,7 +59,9 @@
     resize: none;
     outline: none;
   }
-  
+  p{
+    color:#00a1d6
+  }
   .comment-submit {
     width: 70px;
     height: 64px;
