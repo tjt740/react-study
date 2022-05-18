@@ -26,8 +26,9 @@ function App() {
 
 
       {/* 表单 */}
-
       <FormComponent/>
+
+      
     </div>
   )
 }
