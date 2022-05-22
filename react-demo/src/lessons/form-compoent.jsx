@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { createRef } from 'react';
 
 class FormComponent extends React.Component {
 
@@ -16,12 +16,25 @@ class FormComponent extends React.Component {
         })
     }
 
+
+    // 1. 使用createRef产生一个存放dom的对象容器
+    msgRef = createRef()
+
+    // 3. 获取ref上参数信息
+    changeHandler = () => { 
+        console.log(this.msgRef.current.value);
+    }
     render() {
         return (
             <div>
 
                 {/* 给input表单绑定初始值，并添加change事件 */}
                 <input value={this.state.message} onChange={this.handleChange} />
+
+                {/* 2. ref绑定 获取真实dom */}
+                <input ref={this.msgRef} />
+                <button onClick={this.changeHandler}>获取ref参数</button>
+
 
             </div>
         );

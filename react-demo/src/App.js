@@ -3,7 +3,7 @@ import './App.css';
 // import  FnComponent  from './lessons/fn-component';
 // import ClassComponent from './lessons/class-component';
 // import StateComponent from './lessons/state-component';
-// import EventComponent from './lessons/event-component';
+import EventComponent from './lessons/event-component';
 
 import FormComponent from './lessons/form-compoent';
 
@@ -22,7 +22,7 @@ function App() {
 
 
       {/* 事件 */}
-      {/* <EventComponent></EventComponent> */}
+      <EventComponent></EventComponent>
 
 
       {/* 表单 */}

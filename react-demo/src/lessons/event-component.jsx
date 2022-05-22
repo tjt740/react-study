@@ -16,6 +16,9 @@ class EventComponent extends React.Component {
         console.log('接受传参:', val, event)  // 谭金涛 , Event参数 
     }
 
+    handleClick6 = (val,e) => { 
+        console.log('接收参数',val,e)
+    }
 
     render() {
         return (
@@ -34,7 +37,9 @@ class EventComponent extends React.Component {
 
                 {/* 函数声明携参 */}
                 <button onClick={this.handleClick5.bind(this, '谭金涛')}>点击触发事件5并传参</button>
-           
+                
+                {/* 箭头函数传参 */}
+                <button onClick={(e)=>this.handleClick6('起来健身',e)}>点击触发事件6</button>
             </div>
         );
     }
