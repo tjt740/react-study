@@ -1,5 +1,5 @@
 import React from 'react';
-
+import SonCopyComponent from './son-copy-component';
 // 函数子组件
 function FunSonComponent(props) {
     console.log('父级参数:', props);
@@ -32,18 +32,27 @@ class SonToFatherComponent extends React.Component {
     // step2 设置父级回调函数 (核心)
     changeFatherMsg = (newData) => {
         console.log('子组件传入的数据:', newData);
+        this.setState({
+            oldMsg: newData
+        })
     };
 
     render() {
         return (
             <div>
-              
+
                 <p>父级数据: {this.state.oldMsg}</p>
                 {/* step3 子组件挂载父级回调函数 */}
-                <FunSonComponent
+                {/* <FunSonComponent
+                    msg={this.state.oldMsg}
+                    cb={this.changeFatherMsg}
+                /> */}
+
+                <SonCopyComponent
                     msg={this.state.oldMsg}
                     cb={this.changeFatherMsg}
                 />
+                
             </div>
         );
     }

@@ -1,12 +1,12 @@
 import './App.css';
 
-// import  FnComponent  from './lessons/fn-component';
-// import ClassComponent from './lessons/class-component';
-// import StateComponent from './lessons/state-component';
-// import EventComponent from './lessons/event-component';
-// import FormComponent from './lessons/form-compoent';
-// import UuidComponent from './lessons/uuid-component';
-// import FatherToSonComponent from './lessons/father-to-son-component';
+import  FnComponent  from './lessons/fn-component';
+import ClassComponent from './lessons/class-component';
+import StateComponent from './lessons/state-component';
+import EventComponent from './lessons/event-component';
+import FormComponent from './lessons/form-compoent';
+import UuidComponent from './lessons/uuid-component';
+import FatherToSonComponent from './lessons/father-to-son-component';
 import SonToFatherComponent from './lessons/son-to-father-component';
 
 

@@ -6,7 +6,7 @@ function SonFunComponent(props) {
     return (
         <>
             <h1>function 子组件 </h1>
-            {console.log(props)}
+            {console.log('父级数据',props)}
             <input type="text" defaultValue={props.fatherInfo3} />
         </>
     );
@@ -29,11 +29,11 @@ class FatherToSonComponent extends React.Component {
                     fatherInfo2={this.fatherValue}
                     cb={() => console.log('tjt')}
                     bool={true}
-                    dom={ <p> 这是一个html标签 </p> }
+                    dom={<p> 这是一个html标签 </p>}
                 />
 
                 {/* 父传子 函数组件 */}
-                <SonFunComponent fatherInfo3={this.fatherValue} />
+                <SonFunComponent fatherInfo3={this.fatherValue} fatherInfo4={this.state.fatherMsg} />
             </div>
         );
     }
