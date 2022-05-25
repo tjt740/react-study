@@ -8,7 +8,7 @@ import FormComponent from './lessons/form-compoent';
 import UuidComponent from './lessons/uuid-component';
 import FatherToSonComponent from './lessons/father-to-son-component';
 import SonToFatherComponent from './lessons/son-to-father-component';
-
+import BrotherComponent from './lessons/brother-component';
 
 
 function App() {
@@ -41,9 +41,8 @@ function App() {
 
       {/* 组件传值  */}
       {/* <FatherToSonComponent /> */}
- 
-      <SonToFatherComponent/>
-      
+      {/* <SonToFatherComponent/> */}
+      <BrotherComponent/>
 
     </div>
   )
