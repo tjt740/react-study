@@ -47,7 +47,7 @@ class BrotherComponent extends React.Component {
                 <Brother1Component cb={this.state} />
 
                 {/* step3️⃣ 给兄弟2组件用自定义属性绑定state(数据) */}
-                {/* <Brother2Component info={this.state.msg} /> */}
+                <Brother2Component info={this.state.msg} />
 
 
                 <Brother3Component data={this.state} />
