@@ -78,8 +78,8 @@ function App() {
 
 
       {/* @React Hooks */}
-      {/* <UseStateComponent /> */}
-      <UseEffectComponent/>
+      <UseStateComponent />
+      {/* <UseEffectComponent/> */}
       {/*__________________________________________*/}
     </div>
   )
