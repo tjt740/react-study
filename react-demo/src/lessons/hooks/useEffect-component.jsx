@@ -15,11 +15,10 @@ function UseEffectCom() {
 
         // step4️⃣ 调用ajax
         let url = 'https://tianqiapi.com/api?version=v6&appid=12382165&appsecret=9QN9R6Ma&city=%E6%9D%AD%E5%B7%9E';
-        const res = async () => {
+        (async () => {
             let res =  await axios.get(url)
             setWeather(res.data.air_tips)
-        }
-        res()
+        })()
     }, [mathNum])
  
   

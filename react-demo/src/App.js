@@ -19,7 +19,7 @@ import UseStateComponent from './lessons/hooks/useState-components';
 import UseEffectComponent from './lessons/hooks/useEffect-component';
 import UseStateComponentOne from './lessons/hooks/usestate-one-component.jsx';
 import UseEffectComponentOne from './lessons/hooks/useeffect-one-component';
-
+import UseRef from './lessons/hooks/useRef-component'
 function App() {
 
   return (
@@ -81,8 +81,10 @@ function App() {
       { /* @React Hooks */ }
       { /* <UseStateComponent /> */ }
       {/* <UseStateComponentOne /> */}
-      { /* <UseEffectComponent/> */}
-      <UseEffectComponentOne/>
+      {/* <UseEffectComponent/> */}
+      {/* <UseEffectComponentOne/> */}
+
+      <UseRef/>
       { /*__________________________________________*/ }
     </div>
   )
