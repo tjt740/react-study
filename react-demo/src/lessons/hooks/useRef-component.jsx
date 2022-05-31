@@ -1,55 +1,54 @@
-import React from "react";
+import React from 'react';
 
 // step1️⃣ 从React中引入useRef函数
 import { useRef, useEffect } from 'react';
+import { ReactDOM } from 'react-dom/client';
 
 
-class ClassCom extends React.Component {
-    render() {
-        return (
-            <>
-                <input placeholder="类组件" />
-                <h3>类组件</h3>
-            </>
-        )
-    }
-}
 
 function UseRefCom() {
     const h1Ref = useRef(null);
-    const classRef = useRef(null);
+
     useEffect(() => {
+        h1Ref.current.innerHTML = '哈哈哈';
+        // 🔊 1.通过useRef获取DOM元素
         console.log(h1Ref);
-        h1Ref.current.innerHTML = '哈哈哈'
-        // todo: 可以尝试学习 给类组件绑定ref（不能给类组件绑定，可以封装个函数组件，函数组件引入类组件，然后给类组件绑定ref）
-
-        // Tjt: React.findNode()  React.creatRef()
-
-        console.log(classRef)
-    }, [])
+      
+    }, []);
 
     return (
         <>
-            <h1 ref={h1Ref}>123</h1>
-            <ClassCom ref={ classRef } />
+            <h1 ref={h1Ref}>123</h1> 
         </>
-    )
-
-
+    );
 }
 
 class UseRefComponent extends React.Component {
+    componentDidMount() {
+        // 🔊通过React.creatRef()获取DOM元素
+        console.log(this.btn1);
 
+        // 🔊通过原生方法获取DOM元素
+        const h1 = document.getElementById('h1');
+        console.log(h1)
+    }
+
+    constructor() {
+        super();
+        // 1- 创建了一个 ref
+        this.btn1 = React.createRef();
+    }
 
     render() {
         return (
             <div>
-                <h1>useRef</h1>
+                <h1 id='h1'>useRef</h1>
                 <UseRefCom />
+
+                <button ref={this.btn1}>谭金涛</button>
             </div>
         );
     }
-
 }
 
 export default UseRefComponent;
