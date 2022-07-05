@@ -43,10 +43,10 @@ class SonToFatherComponent extends React.Component {
 
                 <p>父级数据: {this.state.oldMsg}</p>
                 {/* step3 子组件挂载父级回调函数 */}
-                {/* <FunSonComponent
+                <FunSonComponent
                     msg={this.state.oldMsg}
                     cb={this.changeFatherMsg}
-                /> */}
+                />
 
                 <SonCopyComponent
                     msg={this.state.oldMsg}

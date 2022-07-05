@@ -2,8 +2,6 @@ import React from 'react';
 
 // step1️⃣ 从React中引入useRef函数
 import { useRef, useEffect } from 'react';
-import { ReactDOM } from 'react-dom/client';
-
 
 
 function UseRefCom() {
@@ -26,11 +24,11 @@ function UseRefCom() {
 class UseRefComponent extends React.Component {
     componentDidMount() {
         // 🔊通过React.creatRef()获取DOM元素
-        console.log(this.btn1);
+        console.log('this.btn1:', this.btn1);
 
         // 🔊通过原生方法获取DOM元素
         const h1 = document.getElementById('h1');
-        console.log(h1)
+        console.log('h1:', h1);
     }
 
     constructor() {
@@ -39,6 +37,7 @@ class UseRefComponent extends React.Component {
         this.btn1 = React.createRef();
     }
 
+    data = '';
     render() {
         return (
             <div>
@@ -46,6 +45,10 @@ class UseRefComponent extends React.Component {
                 <UseRefCom />
 
                 <button ref={this.btn1}>谭金涛</button>
+
+
+
+                <button onClick={() => { this.data = {name:'谭金涛',age:'23'} }}> 设置参数</button>
             </div>
         );
     }

@@ -13,7 +13,5 @@ import App from './App';
 // 渲染根组件到一个id名叫root的DOM节点上 （./public/index.html）
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <App />  
 );

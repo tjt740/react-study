@@ -19,7 +19,10 @@ import UseStateComponent from './lessons/hooks/useState-components';
 import UseEffectComponent from './lessons/hooks/useEffect-component';
 import UseStateComponentOne from './lessons/hooks/usestate-one-component.jsx';
 import UseEffectComponentOne from './lessons/hooks/useeffect-one-component';
-import UseRef from './lessons/hooks/useRef-component'
+import UseRef from './lessons/hooks/useRef-component';
+import UseContext from './lessons/hooks/usecontext-component';
+import UseCallback from './lessons/hooks/usecallback-component';
+
 function App() {
 
   return (
@@ -83,8 +86,12 @@ function App() {
       {/* <UseStateComponentOne /> */}
       {/* <UseEffectComponent/> */}
       {/* <UseEffectComponentOne/> */}
+      {/* <UseRef/> */}
+      
+      {/* 7.5 */}
+      {/* <UseContext /> */}
+      <UseCallback />
 
-      <UseRef/>
       { /*__________________________________________*/ }
     </div>
   )
