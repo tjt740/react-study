@@ -22,6 +22,8 @@ import UseEffectComponentOne from './lessons/hooks/useeffect-one-component';
 import UseRef from './lessons/hooks/useRef-component';
 import UseContext from './lessons/hooks/usecontext-component';
 import UseCallback from './lessons/hooks/usecallback-component';
+import UseXxx from './lessons/hooks/usexxx-component';
+import Test from './lessons/test-component';
 
 function App() {
 
@@ -86,12 +88,15 @@ function App() {
       {/* <UseStateComponentOne /> */}
       {/* <UseEffectComponent/> */}
       {/* <UseEffectComponentOne/> */}
-      {/* <UseRef/> */}
       
       {/* 7.5 */}
+      <UseRef/>
       {/* <UseContext /> */}
-      <UseCallback />
+      {/* <UseCallback /> */}
+      {/* <UseXxx/> */}
 
+
+      {/* <Test /> */}
       { /*__________________________________________*/ }
     </div>
   )
