@@ -33,12 +33,13 @@ class UseRefComponent extends React.Component {
     constructor() {
         super();
         // 1- 创建了一个 ref
-        this.btn1 = React.createRef();
+        this.btn1 = React.createRef();    
     }
 
     render() {
         return (
             <div>
+                { this.state.num }
                 <h1 id="h1">useRef</h1>
                 <UseRefCom />
                 <button ref={this.btn1}>谭金涛</button>

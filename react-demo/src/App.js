@@ -24,7 +24,7 @@ import UseContext from './lessons/hooks/usecontext-component';
 import UseCallback from './lessons/hooks/usecallback-component';
 import UseXxx from './lessons/hooks/usexxx-component';
 import Test from './lessons/test-component';
-
+import DayDownComponent from './lessons/demo/day-down-component';
 function App() {
 
   return (
@@ -90,14 +90,19 @@ function App() {
       {/* <UseEffectComponentOne/> */}
       
       {/* 7.5 */}
-      <UseRef/>
+      {/* <UseRef/> */}
       {/* <UseContext /> */}
       {/* <UseCallback /> */}
       {/* <UseXxx/> */}
 
 
-      {/* <Test /> */}
-      { /*__________________________________________*/ }
+      <Test />
+      { /*__________________________________________*/}
+      
+
+
+      {/* <DayDownComponent /> */}
+      { /*__________________________________________*/}
     </div>
   )
 }
