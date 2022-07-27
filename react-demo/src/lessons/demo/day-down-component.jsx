@@ -19,11 +19,9 @@ class DayDownComponent extends React.Component {
         },
         payTimer: null,
     };
-
+   
     componentDidMount() {
-        console.log(dayjs()
-        .add(Number(this.props.expirationDate), 's')
-        .toISOString())
+      
         setTimeout(() => {
             if (this.props.expirationDate) {
              

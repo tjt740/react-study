@@ -1,28 +1,43 @@
-import React from 'react';
+import React, { Children } from 'react';
 
 
 
-function ComA(props) {
+function ComA({children}) {
+    // const { children } = props;
+    const res = React.Children.map(children,(item)=>item)
+    console.log(res);
     return (
-        <>
-            {console.log(props.children)}
-            <h1>{props.children.map(child => child)}</h1>
-            { props.children[3]() }
-        </>
+        <React.Fragment>
+            {console.log(children)}
+            <h2>{children[0]}</h2>
+            <h2>{children[1].props.children}</h2>
+            {children[2].map((item,index) => {
+                return <h3 key={ index }>
+                    {item}
+                </h3>
+            })}
+            <hr></hr>
+            <h4>{ res }</h4>
+        </React.Fragment>
     )
 }
 
 
 class ChildrenComponent extends React.Component {
+    node = null
+
+  componentDidMount(){
+    console.log(this.node)
+  }
     render() {
         return (
             <div>
 
                 <ComA>
                     我是谭金涛
-                    <p>1234</p>
-                    {[1, 2, 3, 4]}
-                    {() => {  return 'Hi' }}
+                    <p ref={(node)=>this.node=node }>1234</p>
+                    {[7, 8, 9, 10]}
+                    {/* {() => { return 'Hi' }} */}
                 </ComA>
 
             </div>
