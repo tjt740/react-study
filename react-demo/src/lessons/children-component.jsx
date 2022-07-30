@@ -6,9 +6,10 @@ function ComA({children}) {
     // const { children } = props;
     const res = React.Children.map(children,(item)=>item)
     console.log(res);
+  
     return (
         <React.Fragment>
-            {console.log(children)}
+            {/* {console.log(children)}
             <h2>{children[0]}</h2>
             <h2>{children[1].props.children}</h2>
             {children[2].map((item,index) => {
@@ -16,7 +17,7 @@ function ComA({children}) {
                     {item}
                 </h3>
             })}
-            <hr></hr>
+            <hr></hr> */}
             <h4>{ res }</h4>
         </React.Fragment>
     )
@@ -27,7 +28,7 @@ class ChildrenComponent extends React.Component {
     node = null
 
   componentDidMount(){
-    console.log(this.node)
+    // console.log(this.node)
   }
     render() {
         return (

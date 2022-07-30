@@ -12,7 +12,7 @@ const FnFarther = () => {
             <TextContext.Provider value={count}>
                 <FnChild1></FnChild1>
                 <hr />
-                <FnChild2></FnChild2>
+                {/* <FnChild2></FnChild2> */}
             </TextContext.Provider>
         </>
     );

@@ -13,7 +13,7 @@ class DayDownComponent extends React.Component {
                 .add(Number(this.props.expirationDate), 's')
                 .toISOString(),
             showTime: strftime(
-                '%H:%M:%S',
+                '%H:%M',
                 new Date(0, 0, 0, 0, 0, this.props.expirationDate)
             ),
         },
@@ -31,7 +31,7 @@ class DayDownComponent extends React.Component {
                             .add(Number(this.props.expirationDate), 's')
                             .toISOString(),
                         showTime: strftime(
-                            '%H:%M:%S',
+                            '%H:%M',
                             new Date(0, 0, 0, 0, 0, this.props.expirationDate)
                         ),
                     },
@@ -74,7 +74,7 @@ class DayDownComponent extends React.Component {
             this.setState({
                 countObj: {
                     endTime: this.state.countObj.endTime,
-                    showTime: `${hours}:${minutes}:${seconds}`,
+                    showTime: `${hours}:${minutes}`,
                 },
             });
         }

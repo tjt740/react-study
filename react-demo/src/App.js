@@ -25,6 +25,8 @@ import UseCallback from './lessons/hooks/usecallback-component';
 import UseXxx from './lessons/hooks/usexxx-component';
 import Test from './lessons/test-component';
 import DayDownComponent from './lessons/demo/day-down-component';
+import UseMemoComponent from './lessons/hooks/usememo-component';
+
 function App() {
 
   return (
@@ -65,7 +67,7 @@ function App() {
       { /*__________________________________________*/ }
 
       { /* @组件children属性 */ }
-       <ChildrenComponent/> 
+       {/* <ChildrenComponent/>  */}
       { /*__________________________________________*/ }
 
 
@@ -93,6 +95,7 @@ function App() {
       {/* <UseRef/> */}
       {/* <UseContext /> */}
       {/* <UseCallback /> */}
+      
       {/* <UseXxx/> */}
 
 
@@ -104,7 +107,7 @@ function App() {
       { /*__________________________________________*/}
 
 
-      
+      <UseMemoComponent/>
     
       { /*__________________________________________*/}
 
