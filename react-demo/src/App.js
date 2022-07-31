@@ -94,7 +94,7 @@ function App() {
       {/* 7.5 */}
       {/* <UseRef/> */}
       {/* <UseContext /> */}
-      {/* <UseCallback /> */}
+      <UseCallback />
       
       {/* <UseXxx/> */}
 
@@ -107,7 +107,7 @@ function App() {
       { /*__________________________________________*/}
 
 
-      <UseMemoComponent/>
+      {/* <UseMemoComponent/> */}
     
       { /*__________________________________________*/}
 
