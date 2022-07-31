@@ -10,6 +10,7 @@ const Callback = React.memo(() => {
         useMemoNum:0,
         name: 'tjt',
     });
+
     const handleClick = (newValue) => {
         setCount({
             ...count,
@@ -22,7 +23,7 @@ const Callback = React.memo(() => {
             ...count,
             useCallbackNum:newValue
         })
-    }, [count.useCallbackNum]);
+    }, []);
 
 
     const handleClick3 = useCallback((newValue) => { 
