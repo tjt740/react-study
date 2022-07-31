@@ -19,3 +19,12 @@ img{
 .active{
   background-color: rgb(237, 204, 205);
 }
+
+
+span {
+  color:rgb(0, 183, 255)
+}
+
+p{
+  color:darkorange
+}

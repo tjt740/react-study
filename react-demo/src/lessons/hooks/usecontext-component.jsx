@@ -27,6 +27,7 @@ const FnChild1 = () => {
             数字🔢: {value}
             {console.log('🦢 Child1')}
             <FnGrandSon />
+            <FnChild2></FnChild2>
         </>
     );
 };
