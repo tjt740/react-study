@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> 2df6a2aeaf10fc50b4b083e79cc0cd8655842bfe
 // Step1️⃣ 往往useCallback需要配合React.memo / useMemo 一起使用 
 import React, { useState, useCallback } from 'react';
 import { useMemo } from 'react';
@@ -28,8 +31,7 @@ const Callback = React.memo(() => {
             useCallbackNum:newValue
         })
     }, []);
-
-
+ 
     const handleClick3 = useCallback((newValue) => { 
         setCount({
             ...count,
