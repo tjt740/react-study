@@ -94,9 +94,9 @@ function App() {
       {/* 7.5 */}
       {/* <UseRef/> */}
       {/* <UseContext /> */}
-      <UseCallback />
+      {/* <UseCallback /> */}
       
-      {/* <UseXxx/> */}
+      <UseXxx/>
 
 
       {/* <Test /> */}
