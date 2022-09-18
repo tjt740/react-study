@@ -26,96 +26,94 @@ import UseXxx from './lessons/hooks/usexxx-component';
 import Test from './lessons/test-component';
 import DayDownComponent from './lessons/demo/day-down-component';
 import UseMemoComponent from './lessons/hooks/usememo-component';
+import UseXxxx from './lessons/hooks/hook';
+import ReduxComponent from './lessons/redux/redux';
 
+import ThreeComponent from './three/index';
 function App() {
+    return (
+        <div className="App">
+            {/* @函数组件 */}
+            {/* <FnComponent></FnComponent> */}
+            {/*__________________________________________*/}
 
-  return (
-    <div className="App">
-      { /* @函数组件 */ }
-      { /* <FnComponent></FnComponent> */ }
-      { /*__________________________________________*/ }
+            {/* @类组件 */}
+            {/* <ClassComponent/> */}
+            {/*__________________________________________*/}
 
-      { /* @类组件 */ }
-      { /* <ClassComponent/> */ }
-      { /*__________________________________________*/ }
+            {/* <StateComponent/> */}
+            {/*__________________________________________*/}
 
-      { /* @组件状态 */ }
-      { /* <StateComponent/> */ }
-      { /*__________________________________________*/ }
+            {/* @事件 */}
+            {/* <EventComponent></EventComponent> */}
+            {/*__________________________________________*/}
 
-      { /* @事件 */ }
-      { /* <EventComponent></EventComponent> */ }
-      { /*__________________________________________*/ }
+            {/* @表单 */}
+            {/* <FormComponent/> */}
+            {/*__________________________________________*/}
 
-      { /* @表单 */ }
-      { /* <FormComponent/> */ }
-      { /*__________________________________________*/ }
+            {/* @使用uuid函数 */}
+            {/* <UuidComponent/>  */}
+            {/*__________________________________________*/}
 
-      { /* @使用uuid函数 */ }
-       {/* <UuidComponent/>  */}
-      { /*__________________________________________*/ }
+            {/* @组件传值  */}
+            {/* <FatherToSonComponent /> */}
+            {/* <SonToFatherComponent/> */}
+            {/* <BrotherComponent/> */}
+            {/* <ContextComponent /> */}
+            {/*__________________________________________*/}
 
-      { /* @组件传值  */ }
-      { /* <FatherToSonComponent /> */ }
-      { /* <SonToFatherComponent/> */ }
-      { /* <BrotherComponent/> */ }
-      { /* <ContextComponent /> */ }
-      { /*__________________________________________*/ }
+            {/* @传值DEMO练习 */}
+            {/* <ChuanZhiDemoComponent/> */}
+            {/*__________________________________________*/}
 
-      { /* @传值DEMO练习 */ }
-      { /* <ChuanZhiDemoComponent/> */ }
-      { /*__________________________________________*/ }
+            {/* @组件children属性 */}
+            {/* <ChildrenComponent/>  */}
+            {/*__________________________________________*/}
 
-      { /* @组件children属性 */ }
-       {/* <ChildrenComponent/>  */}
-      { /*__________________________________________*/ }
+            {/* @组件props校验 */}
+            {/* <PropsTypeComponent/> */}
+            {/*__________________________________________*/}
 
+            {/* @组件propsm默认值 */}
+            {/* <DefaultPropsComponent /> */}
+            {/*__________________________________________*/}
 
-      { /* @组件props校验 */ }
-      { /* <PropsTypeComponent/> */ }
-      { /*__________________________________________*/ }
+            {/* @React 生命周期 */}
+            {/* { <Lifecycle/>  } */}
+            {/*__________________________________________*/}
 
-      { /* @组件propsm默认值 */ }
-      { /* <DefaultPropsComponent /> */ }
-      { /*__________________________________________*/ }
+            {/* @React Hooks */}
+            {/* <UseStateComponent /> */}
+            {/* <UseStateComponentOne /> */}
+            {/* <UseEffectComponent/> */}
+            {/* <UseEffectComponentOne/> */}
 
+            {/* 7.5 */}
+            {/* <UseRef/> */}
+            {/* <UseContext /> */}
+            {/* <UseCallback /> */}
 
-      { /* @React 生命周期 */ }
-      { /* <Lifecycle/> */ }
-      { /*__________________________________________*/ }
+            {/* <UseXxx/> */}
 
+            {/* <Test /> */}
+            {/*__________________________________________*/}
 
-      { /* @React Hooks */ }
-      { /* <UseStateComponent /> */ }
-      {/* <UseStateComponentOne /> */}
-      {/* <UseEffectComponent/> */}
-      {/* <UseEffectComponentOne/> */}
-      
-      {/* 7.5 */}
-      {/* <UseRef/> */}
-      {/* <UseContext /> */}
-      {/* <UseCallback /> */}
-      
-      <UseXxx/>
+            {/* <DayDownComponent /> */}
+            {/*__________________________________________*/}
 
+            {/* <UseMemoComponent/> */}
 
-      {/* <Test /> */}
-      { /*__________________________________________*/}
-    
+            {/*__________________________________________*/}
 
-      {/* <DayDownComponent /> */}
-      { /*__________________________________________*/}
+            {/* <UseXxxx/> */}
 
+            {/*__________________________________________*/}
 
-      {/* <UseMemoComponent/> */}
-    
-      { /*__________________________________________*/}
-
-
-      { /*__________________________________________*/}
-    </div>
-  )
+            {/* <ReduxComponent /> */}
+            <ThreeComponent></ThreeComponent>
+        </div>
+    );
 }
 
-export default App
-
+export default App;

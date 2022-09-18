@@ -6,7 +6,6 @@ class SonCopyComponent extends React.Component {
             <div>
                 {console.log('父级数据: ', this.props)}
                 子级类组件改变父级数据:
-
                 {/* 调用父级回调函数 */}
                 <input
                     type="text"
