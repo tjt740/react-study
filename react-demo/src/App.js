@@ -30,6 +30,8 @@ import UseXxxx from './lessons/hooks/hook';
 import ReduxComponent from './lessons/redux/redux';
 
 import ThreeComponent from './three/index';
+import FormilyCom from './formily/index';
+
 function App() {
     return (
         <div className="App">
@@ -111,7 +113,10 @@ function App() {
             {/*__________________________________________*/}
 
             {/* <ReduxComponent /> */}
-            <ThreeComponent></ThreeComponent>
+            {/* <ThreeComponent></ThreeComponent> */}
+
+            {/* Formily */}
+            <FormilyCom/>
         </div>
     );
 }
