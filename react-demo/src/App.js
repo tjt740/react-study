@@ -113,10 +113,10 @@ function App() {
             {/*__________________________________________*/}
 
             {/* <ReduxComponent /> */}
-            {/* <ThreeComponent></ThreeComponent> */}
+            <ThreeComponent></ThreeComponent>
 
             {/* Formily */}
-            <FormilyCom/>
+            {/* <FormilyCom/> */}
         </div>
     );
 }
