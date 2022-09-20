@@ -36,7 +36,7 @@ export default function ThreeComponent() {
         // 获取Clock 跟踪时间，解决 Date now() 不准的问题；
         const clock = new THREE.Clock(); // 获取关于时钟的信息： <autoStart> <elapsedTime> <oldTime> <running> <startTime>
 
-        // 利用gsap移动物体， x: 方向距离，duration:秒数 , repeat:重复 , delay: 延迟时间 ease: 速度, yoyo: 来回移动
+        //Step1 利用gsap移动物体， x: 方向距离，duration:秒数 , repeat:重复 , delay: 延迟时间 ease: 速度, yoyo: 来回移动
         const animation1 = gsap.to(cube.position, {
             x: 5,
             duration: 4,
@@ -45,7 +45,7 @@ export default function ThreeComponent() {
             delay: 1,
             ease: 'none',
         });
-        // 利用gsap旋转物体， x: 方向，duration: 秒数， onComplete: 动画完成回调 ，onStart: 动画开始回调
+        //Step2 利用gsap旋转物体， x: 方向，duration: 秒数， onComplete: 动画完成回调 ，onStart: 动画开始回调
         gsap.to(cube.rotation, {
             z: Math.PI * 3,
             duration: 5,
@@ -69,27 +69,18 @@ export default function ThreeComponent() {
             animation1.resume();
         });
 
-
-        // 更具页面大小变化，更新渲染
-        window.addEventListener('resize', () => { 
-            // 更新camera 宽高比;
-            camera.aspect = window.innerWidth / window.innerHeight;
-            /* 
-            更新camera 投影矩阵
-            .updateProjectionMatrix () : undefined
-            更新摄像机投影矩阵。在任何参数被改变以后必须被调用。
-            */
-            camera.updateProjectionMatrix();
-
-            // 更新渲染器
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            // 设置渲染器像素比: 
-            renderer.setPixelRatio(window.devicePixelRatio);
-        })
-
         // 渲染器
         function render(t) {
-
+            /*
+                // 利用默认形参 t 来精确每一次时间变化后
+                // cube 每次加0.01,超出复位
+                cube.position.x = ((t / 1000) * 1) % 5;
+                if (cube.position.x >= 5) {
+                    cube.position.x = 1;
+                }
+                // cube 一直旋转
+                cube.rotation.z = (t / 100) * 1;
+            */
             controls.update();
             
             renderer.render(scene, camera);
