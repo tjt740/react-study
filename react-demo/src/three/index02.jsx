@@ -26,11 +26,12 @@ export default function ThreeComponent() {
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
+        // 渲染器
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         console.log(renderer);
 
-        // 渲染器
+        // 渲染函数
         function render(t) {
             renderer.render(scene, camera);
             // 动画帧

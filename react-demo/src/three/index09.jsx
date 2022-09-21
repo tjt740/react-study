@@ -9,7 +9,8 @@ import gsap from 'gsap';
 // 导入gui
 // import * as dat from 'dat.gui';
 /*
- * 创建酷炫三角形
+ * 通过三角行创建几何体！！！
+* 创建 空心长方体
  */
 
 // const gui = new dat.GUI();
@@ -29,9 +30,44 @@ export default function ThreeComponent() {
         camera.position.set(0, 0, 10);
         scene.add(camera);
 
-        // 11
+        // Step1 创建自定义几何体 , 首先先用BufferGeometry创建一条无限延长的线段，初始化线段点
+        const geometry = new THREE.BufferGeometry();
+        // Step2 创建结合体顶点位置集合(32位浮点数) XYZ
+        const vertexPosition = new Float32Array([
+            1.0, 1.0, 0, // 顶点1,XYZ坐标
+            1.0, 5.0, 0, // 顶点2,XYZ坐标
+            5.0, 5.0, 0, // 顶点3,XYZ坐标
+
+           
+            5.0, 5.0, 0,
+            5.0, 1.0, 0, // 顶点4,XYZ坐标
+            1.0, 1.0, 0,
+        ]);
 
 
+
+        // Step3 根据一维坐标系，设置各点的位置 ,  itemSize = 3 因为每个顶点都是一个三元组。
+        geometry.setAttribute(
+            'position',
+            new THREE.BufferAttribute(vertexPosition, 3)
+        );
+
+        const material = new THREE.MeshBasicMaterial({ color: 0xffe5cd61 });
+        // Step4 根据几何体和材质创建物体
+        const cube = new THREE.Mesh(geometry, material);
+        // 设置为网格
+        cube.material.wireframe = true;
+        console.log('几何体:', geometry);
+         //场景中添加物体
+        scene.add(cube);
+        
+        // 创建空心长方体 
+        const cuboid = new THREE.BoxGeometry(3, 2, 1);
+        const cuboidMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const cuboidCube = new THREE.Mesh(cuboid, cuboidMaterial);
+        const box = new THREE.BoxHelper(cuboidCube)
+        scene.add( box );
+       
 
         //  创建XYZ直角坐标系  (红色代表 X 轴. 绿色代表 Y 轴. 蓝色代表 Z 轴.)
         const axesHelper = new THREE.AxesHelper(7);

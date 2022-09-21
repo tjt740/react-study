@@ -27,6 +27,7 @@ export default function ThreeComponent() {
         const cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
+        // 渲染器
         const renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         console.log(renderer);
@@ -37,7 +38,7 @@ export default function ThreeComponent() {
         const clock = new THREE.Clock(); // 获取关于时钟的信息： <autoStart> <elapsedTime> <oldTime> <running> <startTime> 
 
 
-        // 渲染器
+        // 渲染函数
         function render(t) {
             // 利用默认形参 t 来精确每一次时间变化后
             // cube 每次加0.01,超出复位
