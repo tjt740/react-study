@@ -9,7 +9,6 @@ import { resData } from './taskDTO';
 import * as dat from 'dat.gui';
 const gui = new dat.GUI();
 
-
 var defaults = {
     result: [],
     detailList: [],
@@ -30,11 +29,15 @@ const camera = new THREE.PerspectiveCamera(
     1,
     5000
 );
+
+//初始化网格
+const grid = new THREE.GridHelper(1500, 10, 0xffffff, 0x333333);
+
 const raycaster = new THREE.Raycaster();
 // 初始化渲染器
 const renderer = new THREE.WebGLRenderer({
     antialias: true, //开启锯齿
-    // alpha: true//透明度
+    alpha: true, //透明度
 });
 // 初始化轨道控制器
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -47,62 +50,6 @@ var cartonWidth, cartonHeight, cartonLength;
 export default function ThreeComponent() {
     // 容器
     const container = useRef(null);
-
-    // 创建物体
-    const createCube = (x, y, z) => {
-        // 声明几何体
-        const geometry = new THREE.BoxGeometry(x, y, z);
-
-        // 声明材质;
-        const edges = new THREE.EdgesGeometry(geometry);
-
-        // 几何体+ 材质 = 物体
-        const cube = new THREE.LineSegments(
-            edges,
-            new THREE.LineBasicMaterial({ color: 0xffffff })
-        );
-
-        // var geometry = new THREE.BoxGeometry();
-
-        // geometry.vertices.push(
-        //     new THREE.Vector3(-x, -y, -z),
-        //     new THREE.Vector3(-x, y, -z),
-
-        //     new THREE.Vector3(-x, y, -z),
-        //     new THREE.Vector3(x, y, -z),
-
-        //     new THREE.Vector3(x, y, -z),
-        //     new THREE.Vector3(x, -y, -z),
-
-        //     new THREE.Vector3(x, -y, -z),
-        //     new THREE.Vector3(-x, -y, -z),
-
-        //     new THREE.Vector3(-x, -y, z),
-        //     new THREE.Vector3(-x, y, z),
-
-        //     new THREE.Vector3(-x, y, z),
-        //     new THREE.Vector3(x, y, z),
-
-        //     new THREE.Vector3(x, y, z),
-        //     new THREE.Vector3(x, -y, z),
-
-        //     new THREE.Vector3(x, -y, z),
-        //     new THREE.Vector3(-x, -y, z),
-
-        //     new THREE.Vector3(-x, -y, -z),
-        //     new THREE.Vector3(-x, -y, z),
-
-        //     new THREE.Vector3(-x, y, -z),
-        //     new THREE.Vector3(-x, y, z),
-
-        //     new THREE.Vector3(x, y, -z),
-        //     new THREE.Vector3(x, y, z),
-
-        //     new THREE.Vector3(x, -y, -z),
-        //     new THREE.Vector3(x, -y, z)
-        // );
-        // return geometry;
-    };
 
     // 初始化纸箱
     const initBox = (xLen, yLen, zLen) => {
@@ -125,6 +72,11 @@ export default function ThreeComponent() {
 
         // 将物体添加到场景中
         scene.add(cube);
+
+        // 添加网格
+        grid.position.y = -cartonHeight / 2 - 50;
+        scene.add(grid);
+
         return cube;
     };
 
@@ -152,6 +104,8 @@ export default function ThreeComponent() {
             materialBorder,
             new THREE.LineBasicMaterial({ color: 0x000000 })
         );
+
+        // todo: 子级盒子样式+ 动画
 
         mesh.add(lineFrame);
         // 装箱复位
@@ -205,15 +159,18 @@ export default function ThreeComponent() {
     };
 
     const init = () => {
+        // 场景颜色
+        scene.background = new THREE.Color(0x999999);
+
         // 调整相机位置
-        camera.position.set(850, 0, 0);
+        camera.position.set(1200, 150, 650);
         camera.up.x = 0;
         camera.up.y = 1;
         camera.up.z = 0;
         camera.lookAt({
             x: 0,
             y: 0,
-            z: 0,
+            z: 200,
         });
 
         const cameraGui = gui.addFolder('调整相机视角');
@@ -227,7 +184,7 @@ export default function ThreeComponent() {
 
         //  坐标辅助线添加到场景中
         // scene.add(axesHelper);
-
+        renderer.outputEncoding = THREE.sRGBEncoding;
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         // 渲染函数
@@ -249,12 +206,12 @@ export default function ThreeComponent() {
     };
 
     useEffect(() => {
-        gsap.to('h1', {
-            rotation: 360,
-            duration: 5,
-            repeat: true,
-            ease: 'none',
-        });
+        // gsap.to('h1', {
+        //     rotation: 360,
+        //     duration: 5,
+        //     repeat: true,
+        //     ease: 'none',
+        // });
 
         // 1. 初始化
         init();
@@ -265,8 +222,7 @@ export default function ThreeComponent() {
 
     return (
         <>
-            {/* <h1 style={{ width: '200px' }}> Three.js 组件 </h1> */}
-            <div className="controller-bottom">
+            <div>
                 <button
                     id="first"
                     onClick={() => {
