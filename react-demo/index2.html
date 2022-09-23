@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+        <title></title>
+        <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.min.js"></script>
+        <style>
+            #imgccc {
+                background: #fff;
+                width: 100px;
+                height: 100px;
+            }
+            .real-map {
+                width: 100px;
+                height: 100px;
+                border: 1px solid #ccc;
+                line-height: 24px;
+                animation-name: tjt;
+                animation-duration: 5s;
+                animation-timing-function: ease;
+                animation-delay: 0s;
+                animation-iteration-count: infinite;
+                animation-fill-mode: none;
+                animation-direction: normal;
+                animation-play-state: running;
+            }
+
+            /* 第一种动画 */
+            @keyframes tjt {
+                from {
+                    transform: scale(1);
+                }
+                to {
+                    transform: scale(1.5);
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- 用户生成图片的div区域，将付给imgaaa -->
+        <div class="real-map">
+            <div>这里是html的元素内容区域</div>
+            <div>这里是html的元素内容区域2</div>
+        </div>
+
+        <img id="imgaaa" />
+        <img id="imgccc" src="" />
+
+        <button id="btn">点击生成</button>
+
+        <script>
+            window.html2canvas = html2canvas;
+            const pic1 = './qq-pic.jpg';
+
+            document.getElementById('imgccc').src = pic1;
+
+            //要转换为图片的dom对象
+            var element = document.querySelector('.real-map');
+            //要显示图片的img标签
+            var image = document.querySelector('#imgaaa');
+            var imageccc = document.querySelector('#imgccc');
+window.GIF = GIF;
+            btn.onclick = () => {
+                console.log(1);
+
+                let arr = [image, imgccc];
+
+                // function shezhitupian() {
+                return new Promise((resolve, reject) => {
+                    let gif = new window.GIF({
+                        workers: 2,
+                        quality: 10,
+                        width: 100,
+                        height: 100,
+                        workerScript: './worker.js',
+                        //         });
+                        // background: '#ffffff',//原透明色替换为白色
+                        // transparent: 0xffffff//把图片中的白色替换为gif的透明色
+                    });
+                    arr.forEach((item, index) => {
+                        console.log(item, index);
+                        let canvas = document.createElement('canvas');
+                        canvas.width = 400;
+                        canvas.height = 400;
+                        let ctx = canvas.getContext('2d');
+                        ctx.drawImage(item, 0, 0, 96, 96);
+                        ctx.font = 'bold 20px Arial';
+                        ctx.fillStyle = 'red';
+                        ctx.fillText('test', 100, 100);
+                        // 间隔
+                        gif.addFrame(canvas, { delay: 1000 });
+                        if (index == arr.length - 1) {
+                            //渲染图片
+                            gif.render();
+                        }
+                    });
+                    //合成图片成功后
+                    gif.on('finished', function (blob) {
+                        // console.log(URL.createObjectURL(blob))
+                        blobToBase64(blob).then((res) => {
+                            resolve({ path: res });
+                        });
+                        window.open(URL.createObjectURL(blob));
+                    });
+                });
+                // }
+                function blobToBase64(blob) {
+                    return new Promise((resolve, reject) => {
+                        const fileReader = new FileReader();
+                        fileReader.onload = (e) => {
+                            resolve(e.target.result);
+                        };
+                        fileReader.readAsDataURL(blob);
+                        fileReader.onerror = () => {
+                            reject(new Error('blobToBase64 error'));
+                        };
+                    });
+                }
+
+                html2canvas(element, { allowTaint: true }).then(function (
+                    canvas
+                ) {
+                    var imageData = canvas.toDataURL(1);
+                    image.src = imageData;
+                    console.log(imageData,image);
+                })
+                //     var arr = [image, imageccc];
+
+                //     setTimeout(function () {
+                //         // 调用gif对象方法
+
+                //         var gif = new GIF({
+                //             workers: 2,
+                //             quality: 10,
+                //             workerScript:
+                //                 './worker.js',
+                //         });
+
+                //         //遍历图片对象
+                //         arr.map((item) => {
+                //             gif.addFrame(item, { delay: 1000 });
+                //         });
+
+                //         gif.on('finished', function (blob) {
+                //             //下载动作
+                //             var el = document.createElement('a');
+                //             el.href = URL.createObjectURL(blob);
+                //             el.download = 'demo-name'; //设置下载文件名称
+                //             document.body.appendChild(el);
+                //             var evt = document.createEvent('MouseEvents');
+                //             evt.initEvent('click', false, false);
+                //             el.dispatchEvent(evt);
+                //             document.body.removeChild(el);
+                //         });
+
+                //         gif.render();
+                //     }, 1000);
+                // });
+            };
+        </script>
+    </body>
+</html>

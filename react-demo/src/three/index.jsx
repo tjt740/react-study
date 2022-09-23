@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
-import * as THREE from 'three';
-// 导入轨道控制器 只能通过这种方法
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+
 // 导入动画库
 import gsap from 'gsap';
 import { resData } from './taskDTO';
+
 // 导入gui
 import * as dat from 'dat.gui';
+const THREE = window.THREE;
 const gui = new dat.GUI();
 
 var defaults = {
@@ -40,9 +40,7 @@ const renderer = new THREE.WebGLRenderer({
     alpha: true, //透明度
 });
 // 初始化轨道控制器
-const controls = new OrbitControls(camera, renderer.domElement);
-//  创建XYZ直角坐标系  (红色代表 X 轴. 绿色代表 Y 轴. 蓝色代表 Z 轴.)
-// const axesHelper = new THREE.AxesHelper(1000);
+const controls = new window.OrbitControls(camera, renderer.domElement);
 
 // 纸箱三维尺寸
 var cartonWidth, cartonHeight, cartonLength;
@@ -91,9 +89,32 @@ export default function ThreeComponent() {
             Math.random()
         );
         // 设置子级盒子材质
-        const material = new THREE.MeshBasicMaterial({ color });
+        const material = new THREE.MeshBasicMaterial({
+            color,
+            // 开启透明度
+            transparent: true,
+            opacity: 0.7,
+        });
         // 几何体 + 材质 = 物体
         const cube = new THREE.Mesh(geometry, material);
+
+        // 子级盒子添加文字
+        // const sprite= new THREE.TextSprite({
+        //     textSize: 0.02,
+        //     material: {
+        //         color: 0x000000,
+        //         transparent: true,
+        //         opacity: 0.8,
+        //         depthTest: false,
+        //     },
+        //     texture: {
+        //         text: Math.random()
+        //     },
+        //     redrawInterval: 0,
+        // });
+        // cube.add(sprite);
+        window.cube = cube;
+
         // 3D模型添加 材质和几何体
         mesh.add(cube);
 
@@ -123,7 +144,7 @@ export default function ThreeComponent() {
     const getInfoDetail = () => {
         // 获取详情
         defaults['result'] = resData;
-        console.log(resData);
+        console.log('resData:', resData);
         for (var i = 0; i < resData.length; i++) {
             defaults['dataList'][i] = resData[i];
         }
@@ -179,11 +200,7 @@ export default function ThreeComponent() {
         cameraGui.add(camera.position, 'z').min(1).max(10000).step(10);
 
         scene.add(camera);
-
         raycaster.intersectObjects(scene.children);
-
-        //  坐标辅助线添加到场景中
-        // scene.add(axesHelper);
         renderer.outputEncoding = THREE.sRGBEncoding;
         renderer.setSize(window.innerWidth, window.innerHeight);
 
@@ -205,24 +222,53 @@ export default function ThreeComponent() {
         container.current.appendChild(renderer.domElement);
     };
 
-    useEffect(() => {
-        // gsap.to('h1', {
-        //     rotation: 360,
-        //     duration: 5,
-        //     repeat: true,
-        //     ease: 'none',
-        // });
+    const exportCurrentCanvas = () => {
+        const a = document.createElement('a');
+        a.href = renderer.domElement.toDataURL('image/png');
+        a.download = 'image.png';
+        generateGif();
+        console.log('下载:',a);
+        // a.click()
+    };
 
+    // 生成gif
+    const generateGif  =() => {
+        let gif = new window.GIF({
+            workers: 2,
+            quality: 10,
+            width: 500,
+            height: 500,
+            workerScript: '../../worker.js',
+        });
+        console.log(gif);
+        console.log(renderer.domElement);
+        for (let i = 0; i < 10; i++) {
+            //  new Promise((resolve) => {
+                setTimeout(() => {
+                    console.log(i);
+                    gif.addFrame(renderer.domElement, { delay: 200 });
+                    // resolve();
+                }, 200);
+            // });
+        }
+        gif.on('finished', function (blob) {
+            window.open(URL.createObjectURL(blob));
+        });
+        gif.render();
+    };
+
+    useEffect(() => {
         // 1. 初始化
         init();
-
         // 2. 获取详情
         getInfoDetail();
+        // 3. 加载canvas
+        exportCurrentCanvas();
     }, []);
 
     return (
         <>
-            <div>
+            <div id="operate">
                 <button
                     id="first"
                     onClick={() => {
