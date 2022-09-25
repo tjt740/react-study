@@ -1,163 +1,469 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-        <title></title>
-        <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/gif.js@0.2.0/dist/gif.min.js"></script>
-        <style>
-            #imgccc {
-                background: #fff;
-                width: 100px;
-                height: 100px;
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600" style="background-color: antiquewhite;"></canvas>
+    <script>
+        var CANVAS = document.getElementById("canvas");
+        var CTX = CANVAS.getContext('2d');
+        var FRAME_LIST = []; // 存放每一帧以及对应的延时
+        var TEMP_CANVAS = document.createElement("canvas");//用来拿 imagedata 的工具人
+        var TEMP_CANVAS_CTX = null; // 工具人的 getContext('2d')
+        var GIF_INFO = {}; // GIF 的一些信息
+        var STREAM = null;
+        var LAST_DISPOSA_METHOD = null;
+        var CURRENT_FRAME_INDEX = -1; //当前帧的下标
+        var TRANSPARENCY = null;
+ 
+        class Stream {
+            constructor(data) {
+                this.data = data;
+                this.len = data.length;
+                this.pos = 0;
             }
-            .real-map {
-                width: 100px;
-                height: 100px;
-                border: 1px solid #ccc;
-                line-height: 24px;
-                animation-name: tjt;
-                animation-duration: 5s;
-                animation-timing-function: ease;
-                animation-delay: 0s;
-                animation-iteration-count: infinite;
-                animation-fill-mode: none;
-                animation-direction: normal;
-                animation-play-state: running;
-            }
-
-            /* 第一种动画 */
-            @keyframes tjt {
-                from {
-                    transform: scale(1);
+ 
+            readByte() {
+                if (this.pos >= this.data.length) {
+                    throw new Error('Attempted to read past end of stream.');
                 }
-                to {
-                    transform: scale(1.5);
-                }
-            }
-        </style>
-    </head>
-    <body>
-        <!-- 用户生成图片的div区域，将付给imgaaa -->
-        <div class="real-map">
-            <div>这里是html的元素内容区域</div>
-            <div>这里是html的元素内容区域2</div>
-        </div>
-
-        <img id="imgaaa" />
-        <img id="imgccc" src="" />
-
-        <button id="btn">点击生成</button>
-
-        <script>
-            window.html2canvas = html2canvas;
-            const pic1 = './qq-pic.jpg';
-
-            document.getElementById('imgccc').src = pic1;
-
-            //要转换为图片的dom对象
-            var element = document.querySelector('.real-map');
-            //要显示图片的img标签
-            var image = document.querySelector('#imgaaa');
-            var imageccc = document.querySelector('#imgccc');
-window.GIF = GIF;
-            btn.onclick = () => {
-                console.log(1);
-
-                let arr = [image, imgccc];
-
-                // function shezhitupian() {
-                return new Promise((resolve, reject) => {
-                    let gif = new window.GIF({
-                        workers: 2,
-                        quality: 10,
-                        width: 100,
-                        height: 100,
-                        workerScript: './worker.js',
-                        //         });
-                        // background: '#ffffff',//原透明色替换为白色
-                        // transparent: 0xffffff//把图片中的白色替换为gif的透明色
-                    });
-                    arr.forEach((item, index) => {
-                        console.log(item, index);
-                        let canvas = document.createElement('canvas');
-                        canvas.width = 400;
-                        canvas.height = 400;
-                        let ctx = canvas.getContext('2d');
-                        ctx.drawImage(item, 0, 0, 96, 96);
-                        ctx.font = 'bold 20px Arial';
-                        ctx.fillStyle = 'red';
-                        ctx.fillText('test', 100, 100);
-                        // 间隔
-                        gif.addFrame(canvas, { delay: 1000 });
-                        if (index == arr.length - 1) {
-                            //渲染图片
-                            gif.render();
-                        }
-                    });
-                    //合成图片成功后
-                    gif.on('finished', function (blob) {
-                        // console.log(URL.createObjectURL(blob))
-                        blobToBase64(blob).then((res) => {
-                            resolve({ path: res });
-                        });
-                        window.open(URL.createObjectURL(blob));
-                    });
-                });
-                // }
-                function blobToBase64(blob) {
-                    return new Promise((resolve, reject) => {
-                        const fileReader = new FileReader();
-                        fileReader.onload = (e) => {
-                            resolve(e.target.result);
-                        };
-                        fileReader.readAsDataURL(blob);
-                        fileReader.onerror = () => {
-                            reject(new Error('blobToBase64 error'));
-                        };
-                    });
-                }
-
-                html2canvas(element, { allowTaint: true }).then(function (
-                    canvas
-                ) {
-                    var imageData = canvas.toDataURL(1);
-                    image.src = imageData;
-                    console.log(imageData,image);
-                })
-                //     var arr = [image, imageccc];
-
-                //     setTimeout(function () {
-                //         // 调用gif对象方法
-
-                //         var gif = new GIF({
-                //             workers: 2,
-                //             quality: 10,
-                //             workerScript:
-                //                 './worker.js',
-                //         });
-
-                //         //遍历图片对象
-                //         arr.map((item) => {
-                //             gif.addFrame(item, { delay: 1000 });
-                //         });
-
-                //         gif.on('finished', function (blob) {
-                //             //下载动作
-                //             var el = document.createElement('a');
-                //             el.href = URL.createObjectURL(blob);
-                //             el.download = 'demo-name'; //设置下载文件名称
-                //             document.body.appendChild(el);
-                //             var evt = document.createEvent('MouseEvents');
-                //             evt.initEvent('click', false, false);
-                //             el.dispatchEvent(evt);
-                //             document.body.removeChild(el);
-                //         });
-
-                //         gif.render();
-                //     }, 1000);
-                // });
+                if (this.data instanceof Uint8Array)
+                    return this.data[this.pos++];
+                else
+                    return this.data.charCodeAt(this.pos++) & 0xFF;
             };
-        </script>
-    </body>
+ 
+            readBytes(n) {
+                let bytes = [];
+                for (let i = 0; i < n; i++) {
+                    bytes.push(this.readByte());
+                }
+                return bytes;
+            };
+ 
+            read(n) {
+                let chars = '';
+                for (let i = 0; i < n; i++) {
+                    chars += String.fromCharCode(this.readByte());
+                }
+                return chars;
+            };
+ 
+            readUnsigned() { // Little-endian.
+                let unsigned = this.readBytes(2);
+                return (unsigned[1] << 8) + unsigned[0];
+            };
+        };
+ 
+        // 转流数组
+        function byteToBitArr(bite) {
+            let byteArr = [];
+            for (let i = 7; i >= 0; i--) {
+                byteArr.push(!!(bite & (1 << i)));
+            }
+            return byteArr;
+        };
+ 
+        // Generic functions
+        function bitsToNum(ba) {
+            return ba.reduce(function (s, n) {
+                return s * 2 + n;
+            }, 0);
+        };
+ 
+        function lzwDecode(minCodeSize, data) {
+            // TODO: Now that the GIF parser is a bit different, maybe this should get an array of bytes instead of a String?
+            let pos = 0; // Maybe this streaming thing should be merged with the Stream?
+            function readCode(size) {
+                let code = 0;
+                for (let i = 0; i < size; i++) {
+                    if (data.charCodeAt(pos >> 3) & (1 << (pos & 7))) {
+                        code |= 1 << i;
+                    }
+                    pos++;
+                }
+                return code;
+            };
+ 
+            let output = [],
+                clearCode = 1 << minCodeSize,
+                eoiCode = clearCode + 1,
+                codeSize = minCodeSize + 1,
+                dict = [];
+ 
+            function clear() {
+                dict = [];
+                codeSize = minCodeSize + 1;
+                for (let i = 0; i < clearCode; i++) {
+                    dict[i] = [i];
+                }
+                dict[clearCode] = [];
+                dict[eoiCode] = null;
+ 
+            };
+ 
+            let code = null, last = null;
+            while (true) {
+                last = code;
+                code = readCode(codeSize);
+ 
+                if (code === clearCode) {
+                    clear();
+                    continue;
+                }
+                if (code === eoiCode) {
+                    break
+                };
+                if (code < dict.length) {
+                    if (last !== clearCode) {
+                        dict.push(dict[last].concat(dict[code][0]));
+                    }
+                }
+                else {
+                    if (code !== dict.length) {
+                        throw new Error('Invalid LZW code.');
+                    }
+                    dict.push(dict[last].concat(dict[last][0]));
+                }
+                output.push.apply(output, dict[code]);
+ 
+                if (dict.length === (1 << codeSize) && codeSize < 12) {
+                    // If we're at the last code and codeSize is 12, the next code will be a clearCode, and it'll be 12 bits long.
+                    codeSize++;
+                }
+            }
+            return output;
+        };
+ 
+        function readSubBlocks() {
+            let size = null, data = '';
+            do {
+                size = STREAM.readByte();
+                data += STREAM.read(size);
+            } while (size !== 0);
+            return data;
+        };
+ 
+        function doImg(img) {
+            if (!TEMP_CANVAS_CTX) {
+                // 没有就创建
+                TEMP_CANVAS_CTX = TEMP_CANVAS.getContext('2d');
+            }
+            const currIdx = FRAME_LIST.length,
+                  ct = img.lctFlag ? img.lct : GIF_INFO.gct;
+            if (currIdx > 0) {
+                // 这块不要动
+                if (LAST_DISPOSA_METHOD === 3) {
+                    // Restore to previous
+                    // If we disposed every TEMP_CANVAS_CTX including first TEMP_CANVAS_CTX up to this point, then we have
+                    // no composited TEMP_CANVAS_CTX to restore to. In this case, restore to background instead.
+                    if (CURRENT_FRAME_INDEX !== null && CURRENT_FRAME_INDEX > -1) {
+                    	TEMP_CANVAS_CTX.putImageData(FRAME_LIST[CURRENT_FRAME_INDEX].data, 0, 0);
+                    } else {
+                        TEMP_CANVAS_CTX.clearRect(0, 0, TEMP_CANVAS.width, TEMP_CANVAS.height);
+                    }
+                } else {
+                    CURRENT_FRAME_INDEX = currIdx - 1;
+                }
+ 
+                if (LAST_DISPOSA_METHOD === 2) {
+                    // Restore to background color
+                    // Browser implementations historically restore to transparent; we do the same.
+                    // http://www.wizards-toolkit.org/discourse-server/viewtopic.php?f=1&t=21172#p86079
+                    TEMP_CANVAS_CTX.clearRect(0, 0, TEMP_CANVAS.width, TEMP_CANVAS.height);
+                }
+            }
+            let imgData = TEMP_CANVAS_CTX.getImageData(img.leftPos, img.topPos, img.width, img.height);
+            img.pixels.forEach(function (pixel, i) {
+                if (pixel !== TRANSPARENCY) {
+                    imgData.data[i * 4 + 0] = ct[pixel][0];
+                    imgData.data[i * 4 + 1] = ct[pixel][1];
+                    imgData.data[i * 4 + 2] = ct[pixel][2];
+                    imgData.data[i * 4 + 3] = 255; // Opaque.
+                }
+            });
+ 
+            TEMP_CANVAS_CTX.putImageData(imgData, img.leftPos, img.topPos);
+        };
+ 
+        function pushFrame(delay) {
+            if (!TEMP_CANVAS_CTX) {
+                return
+            };
+            FRAME_LIST.push({ delay, data: TEMP_CANVAS_CTX.getImageData(0, 0, GIF_INFO.width, GIF_INFO.height) });
+        };
+ 
+        // 解析
+        function parseExt(block) {
+ 
+            function parseGCExt(block) {
+                STREAM.readByte(); // Always 4 这个必须得这样执行一次
+                var bits = byteToBitArr(STREAM.readByte());
+                block.reserved = bits.splice(0, 3); // Reserved; should be 000.
+ 
+ 
+                block.disposalMethod = bitsToNum(bits.splice(0, 3));
+                LAST_DISPOSA_METHOD = block.disposalMethod
+ 
+                block.userInput = bits.shift();
+                block.transparencyGiven = bits.shift();
+                block.delayTime = STREAM.readUnsigned();
+                block.transparencyIndex = STREAM.readByte();
+                block.terminator = STREAM.readByte();
+                pushFrame(block.delayTime);
+                TRANSPARENCY = block.transparencyGiven ? block.transparencyIndex : null;
+            };
+ 
+            function parseComExt(block) {
+                block.comment = readSubBlocks();
+            };
+ 
+            function parsePTExt(block) {
+                // No one *ever* uses this. If you use it, deal with parsing it yourself.
+                STREAM.readByte(); // Always 12 这个必须得这样执行一次
+                block.ptHeader = STREAM.readBytes(12);
+                block.ptData = readSubBlocks();
+            };
+ 
+            function parseAppExt(block) {
+                var parseNetscapeExt = function (block) {
+                    STREAM.readByte(); // Always 3 这个必须得这样执行一次
+                    block.unknown = STREAM.readByte(); // ??? Always 1? What is this?
+                    block.iterations = STREAM.readUnsigned();
+                    block.terminator = STREAM.readByte();
+                };
+ 
+                function parseUnknownAppExt(block) {
+                    block.appData = readSubBlocks();
+                    // FIXME: This won't work if a handler wants to match on any identifier.
+                    // handler.app && handler.app[block.identifier] && handler.app[block.identifier](block);
+                };
+ 
+                STREAM.readByte(); // Always 11 这个必须得这样执行一次
+                block.identifier = STREAM.read(8);
+                block.authCode = STREAM.read(3);
+                switch (block.identifier) {
+                    case 'NETSCAPE':
+                        parseNetscapeExt(block);
+                        break;
+                    default:
+                        parseUnknownAppExt(block);
+                        break;
+                }
+            };
+ 
+            function parseUnknownExt(block) {
+                block.data = readSubBlocks();
+            };
+ 
+            block.label = STREAM.readByte();
+            switch (block.label) {
+                case 0xF9:
+                    block.extType = 'gce';
+                    parseGCExt(block);
+                    break;
+                case 0xFE:
+                    block.extType = 'com';
+                    parseComExt(block);
+                    break;
+                case 0x01:
+                    block.extType = 'pte';
+                    parsePTExt(block);
+                    break;
+                case 0xFF:
+                    block.extType = 'app';
+                    parseAppExt(block);
+                    break;
+                default:
+                    block.extType = 'unknown';
+                    parseUnknownExt(block);
+                    break;
+            }
+        };
+ 
+        function parseImg(img) {
+            function deinterlace(pixels, width) {
+                // Of course this defeats the purpose of interlacing. And it's *probably*
+                // the least efficient way it's ever been implemented. But nevertheless...
+                let newPixels = new Array(pixels.length);
+                const rows = pixels.length / width;
+ 
+                function cpRow(toRow, fromRow) {
+                    const fromPixels = pixels.slice(fromRow * width, (fromRow + 1) * width);
+                    newPixels.splice.apply(newPixels, [toRow * width, width].concat(fromPixels));
+                };
+ 
+                // See appendix E.
+                const offsets = [0, 4, 2, 1],
+                    steps = [8, 8, 4, 2];
+ 
+                let fromRow = 0;
+                for (var pass = 0; pass < 4; pass++) {
+                    for (var toRow = offsets[pass]; toRow < rows; toRow += steps[pass]) {
+                        cpRow(toRow, fromRow)
+                        fromRow++;
+                    }
+                }
+ 
+                return newPixels;
+            };
+ 
+            img.leftPos = STREAM.readUnsigned();
+            img.topPos = STREAM.readUnsigned();
+            img.width = STREAM.readUnsigned();
+            img.height = STREAM.readUnsigned();
+ 
+            let bits = byteToBitArr(STREAM.readByte());
+            img.lctFlag = bits.shift();
+            img.interlaced = bits.shift();
+            img.sorted = bits.shift();
+            img.reserved = bits.splice(0, 2);
+            img.lctSize = bitsToNum(bits.splice(0, 3));
+ 
+            if (img.lctFlag) {
+                img.lct = parseCT(1 << (img.lctSize + 1));
+            }
+ 
+            img.lzwMinCodeSize = STREAM.readByte();
+ 
+            const lzwData = readSubBlocks();
+ 
+            img.pixels = lzwDecode(img.lzwMinCodeSize, lzwData);
+ 
+            if (img.interlaced) { // Move
+                img.pixels = deinterlace(img.pixels, img.width);
+            }
+ 
+            doImg(img);
+        };
+ 
+        // LZW (GIF-specific)
+        function parseCT(entries) { // Each entry is 3 bytes, for RGB.
+            let ct = [];
+            for (let i = 0; i < entries; i++) {
+                ct.push(STREAM.readBytes(3));
+            }
+            return ct;
+        };
+ 
+        function parseHeader() {
+            GIF_INFO.sig = STREAM.read(3);
+            GIF_INFO.ver = STREAM.read(3);
+            if (GIF_INFO.sig !== 'GIF') throw new Error('Not a GIF file.'); // XXX: This should probably be handled more nicely.
+            GIF_INFO.width = STREAM.readUnsigned();
+            GIF_INFO.height = STREAM.readUnsigned();
+ 
+            let bits = byteToBitArr(STREAM.readByte());
+            GIF_INFO.gctFlag = bits.shift();
+            GIF_INFO.colorRes = bitsToNum(bits.splice(0, 3));
+            GIF_INFO.sorted = bits.shift();
+            GIF_INFO.gctSize = bitsToNum(bits.splice(0, 3));
+ 
+            GIF_INFO.bgColor = STREAM.readByte();
+            GIF_INFO.pixelAspectRatio = STREAM.readByte(); // if not 0, aspectRatio = (pixelAspectRatio + 15) / 64
+            if (GIF_INFO.gctFlag) {
+                GIF_INFO.gct = parseCT(1 << (GIF_INFO.gctSize + 1));
+            }
+            // 给 TEMP_CANVAS 设置大小
+            TEMP_CANVAS.width = GIF_INFO.width;
+            TEMP_CANVAS.height = GIF_INFO.height;
+            TEMP_CANVAS.style.width = GIF_INFO.width + 'px';
+            TEMP_CANVAS.style.height = GIF_INFO.height + 'px';
+            TEMP_CANVAS.getContext('2d').setTransform(1, 0, 0, 1, 0, 0);
+        };
+ 
+        function parseBlock() {
+            let block = {};
+            block.sentinel = STREAM.readByte();
+            switch (String.fromCharCode(block.sentinel)) { // For ease of matching
+                case '!':
+                    block.type = 'ext';
+                    parseExt(block);
+                    break;
+                case ',':
+                    block.type = 'img';
+                    parseImg(block);
+                    break;
+                case ';':
+                    block.type = 'eof';
+                    // 已经结束啦。结束就跑这
+                    playGif();
+                    break;
+                default:
+                    throw new Error('Unknown block: 0x' + block.sentinel.toString(16)); // TODO: Pad this with a 0.
+            }
+ 
+            // 递归
+            if (block.type !== 'eof') {
+                parseBlock();
+            }
+        };
+ 
+        // 播放gif
+        function playGif() {
+            let len = FRAME_LIST.length;
+            let index = 0;
+            let img = FRAME_LIST[index];
+ 
+            setInterval(() => {
+                TEMP_CANVAS.getContext("2d").putImageData(FRAME_LIST[index].data, 0, 0);
+                CTX.globalCompositeOperation = "copy";
+                CTX.drawImage(TEMP_CANVAS, 100, 200);
+                index++;
+                if (index >= len) {
+                    index = 0;
+                }
+            }, img.delay * 10);
+        }
+ 
+        // 用xhr请求本地文件
+        function loadGIF(url) {
+            const h = new XMLHttpRequest();
+            h.open('GET', url, true);
+            // 浏览器兼容处理
+            if ('overrideMimeType' in h) {
+                h.overrideMimeType('text/plain; charset=x-user-defined');
+            }
+            // old browsers (XMLHttpRequest-compliant)
+            else if ('responseType' in h) {
+                h.responseType = 'arraybuffer';
+            }
+            // IE9 (Microsoft.XMLHTTP-compliant)
+            else {
+                h.setRequestHeader('Accept-Charset', 'x-user-defined');
+            }
+ 
+            h.onload = function (e) {
+                if (this.status != 200) {
+                    doLoadError('xhr - response');
+                }
+                // emulating response field for IE9
+                if (!('response' in this)) {
+                    this.response = new VBArray(this.responseText).toArray().map(String.fromCharCode).join('');
+                }
+                let data = this.response;
+                if (data.toString().indexOf("ArrayBuffer") > 0) {
+                    data = new Uint8Array(data);
+                }
+ 
+                STREAM = new Stream(data);
+                parseHeader();
+                parseBlock();
+            };
+ 
+            h.onerror = function (e) {
+                console.log("摆烂 error", e)
+            };
+ 
+            h.send();
+        }
+ 
+        // 测试
+        loadGIF("./qq-pic.jpg");
+    </script>
+</body>
 </html>
