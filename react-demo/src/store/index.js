@@ -12,7 +12,7 @@ const initialState = {
 // Step3️⃣ 定义一个纯函数 接受初始值和action 返回更新后的值
 const reducer = (state = initialState, { type, payload }) => {
     // const { type, payload } = action;
-    console.log(payload);
+    // console.log(payload);
     switch (type) {
         case 'addNum':
             return {

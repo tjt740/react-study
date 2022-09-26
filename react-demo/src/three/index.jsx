@@ -7,6 +7,8 @@ import { resData } from './taskDTO';
 // 导入gui
 import * as dat from 'dat.gui';
 
+import { GifWriter } from './gifjs/omggif';
+
 export default function ThreeComponent() {
     // 容器
     const container = useRef(null);
@@ -55,6 +57,9 @@ export default function ThreeComponent() {
         intersected,
         boxArr = [];
 
+    // 进度条
+    let progress; 
+
     // 初始化纸箱
     const initBox = (xLen, yLen, zLen) => {
         cartonWidth = xLen;
@@ -71,7 +76,6 @@ export default function ThreeComponent() {
             edges
             // new THREE.LineBasicMaterial({ color: 0xffffff })
         );
-        console.log(1);
         containerBox.position.set(0, 0, 0);
 
         // 将物体添加到场景中
@@ -93,8 +97,8 @@ export default function ThreeComponent() {
             // Math.random(),
             // Math.random(),
             // Math.random()
-            // 0xFFF73434
-            0xffc5d951
+            // 0xffc5d951
+            0x222222
         );
         // 设置子级盒子材质
         const material = new THREE.MeshBasicMaterial({
@@ -106,8 +110,7 @@ export default function ThreeComponent() {
         // 几何体 + 材质 = 物体
         const cube = new THREE.Mesh(geometry, material);
 
-        // 子级盒子添加文字
-        // todo: 子级盒子样式+ 动画
+        // todo:子级盒子添加文字
 
         // 3D模型添加 材质和几何体
         mesh.add(cube);
@@ -188,7 +191,7 @@ export default function ThreeComponent() {
                 // 上一次选中的盒子
                 // const { r, g, b } = intersected.material.color;
                 boxArr.find((v) => v.uuid === intersected.uuid).material.color =
-                    new THREE.Color(0xffc5d951);
+                    new THREE.Color(0x222222);
                 intersections.at(0).object.material.color = new THREE.Color(
                     0xfff04b4b
                 );
@@ -206,15 +209,14 @@ export default function ThreeComponent() {
     // 渲染函数
     const render = (t) => {
         controls.update();
-
         // 每次执行渲染函数render时候，角度累加0.005
         angle += 0.005;
         // 圆周运动网格模型x坐标计算  绕转半径400
-        var x = 900 * Math.sin(angle);
+        var x = 850 * Math.sin(angle);
         // 圆周运动网格模型y坐标计算  绕转半径400
         var z = 400 * Math.cos(angle);
         // 每次执行render函数，更新需要做圆周运动网格模型Mesh的位置属性
-        controls.object.position.z = x;
+        // controls.object.position.z = x;
         // controls.object.position.y =  x;
         renderer.render(scene, camera);
         // 动画帧
@@ -224,11 +226,8 @@ export default function ThreeComponent() {
     const init = () => {
         // 场景颜色
         scene.background = new THREE.Color(0x999999);
-
         // 调整相机位置
-        camera.position.set(1200, 180, 650);
-
-        camera.position.set(window.innerHeight >= 900 ? 1800 : 1200, 180, 650);
+        camera.position.set(window.innerHeight >= 900 ? 1800 : 1100, 180, 650);
         camera.up.x = 0;
         camera.up.y = 1;
         camera.up.z = 0;
@@ -237,7 +236,7 @@ export default function ThreeComponent() {
             y: 0,
             z: 200,
         });
-
+        // Tjt: 可删除 gui
         const cameraGui = gui.addFolder('调整相机视角');
         cameraGui.add(camera.position, 'x').min(1).max(10000).step(10);
         cameraGui.add(camera.position, 'y').min(1).max(10000).step(10);
@@ -247,7 +246,6 @@ export default function ThreeComponent() {
         raycaster.intersectObjects(scene.children);
         renderer.outputEncoding = THREE.sRGBEncoding;
         renderer.setSize(window.innerWidth, window.innerHeight);
-
         // 控制器阻尼
         controls.enableDamping = true;
         // 动态阻尼系数
@@ -258,6 +256,7 @@ export default function ThreeComponent() {
         // controls.enabled  = false;
         // 是否允许转动
         // controls.rotate = false;
+
         // 渲染
         render();
 
@@ -271,13 +270,8 @@ export default function ThreeComponent() {
         window.addEventListener('resize', () => {
             // 更新camera 宽高比;
             camera.aspect = window.innerWidth / window.innerHeight;
-            /* 
-            更新camera 投影矩阵
-            .updateProjectionMatrix () : undefined
-            更新摄像机投影矩阵。在任何参数被改变以后必须被调用。
-            */
+            // 更新camera 投影矩阵
             camera.updateProjectionMatrix();
-
             // 更新渲染器
             renderer.setSize(window.innerWidth, window.innerHeight);
             // 设置渲染器像素比:
@@ -285,76 +279,104 @@ export default function ThreeComponent() {
         });
     };
 
-    var gifImgArr = [];
+    const initGIFOperate = () => {
+        const generateBtn = document.getElementById('generate-btn');
+         progress = document.getElementById('progress');
 
-    const exportCurrentCanvas = () => {
-        const a = document.createElement('a');
+        generateBtn.addEventListener('click', async function () {
+            generateBtn.style.display = 'none';
+            progress.style.display = '';
 
-        for (let i = 0; i < 20; i++) {
-            gifImgArr.push(renderer.domElement.toDataURL('image/png'));
-        }
-        a.href = renderer.domElement.toDataURL('image/png');
-        document.getElementById('root').appendChild(a);
-        console.log(a);
-        window.gifshot.createGIF(
-            {
-                gifWidth: 500,
-                gifHeight: 500,
-                interval: 1,
-                image: ['../images/1.jpg','../images/avatar.png'],
-                // 提供当前进度的回调函数当前图像的
-                progressCallback: function (captureProgress) {
-                    console.log(captureProgress);
-                    // document.getElementById('img3').getElementsByTagName('span')[0].innerHTML = parseInt(captureProgress * 100) + '%';
-                },
-                // 当前图像完成时调用的回调函数
-                completeCallback: function () {
-                    console.log('当前图像完成时调用的回调函数');
-                },
-            },
-            (obj) => {
-                console.log('obj:', obj);
-            }
-        );
-        // a.href = renderer.domElement.toDataURL('image/png');
-        // a.download = 'image.png';
+            // 生成gif
+            const buffer = await generateGIF(
+                container.current.children[0],
+                render,
+                4,
+                30
+            );
 
-        // document.getElementById('root').appendChild(a);
-        // a.click()
-        // console.log(gifImgArr);
+            generateBtn.style.display = '';
+            progress.style.display = 'none';
+
+            // 下载
+            const blob = new Blob([buffer], { type: 'image/gif' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'animation.gif';
+            link.dispatchEvent(new MouseEvent('click'));
+        });
     };
-
     // 生成gif
-    const generateGif = async () => {
-        // setTimeout(async () => {
-        let gif = new window.GIF({
-            workers: 2,
-            quality: 10,
-            width: 500,
-            height: 500,
-            // workerScript: './worker.js'
+    const generateGIF = (element, renderFunction, duration = 1, fps = 30) => {
+        const frames = duration * fps;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = element.width;
+        canvas.height = element.height;
+
+        const context = canvas.getContext('2d');
+
+        const buffer = new Uint8Array(
+            canvas.width * canvas.height * frames * 5
+        );
+        const pixels = new Uint8Array(canvas.width * canvas.height);
+        const writer = new GifWriter(buffer, canvas.width, canvas.height, {
+            loop: 0,
         });
 
-        for (let i = 0; i < 10; i++) {
-            await new Promise((resolve) => {
-                setTimeout(() => {
-                    // console.log(i);
-                    gif.addFrame(renderer.domElement, {
-                        copy: false,
-                        delay: 200,
-                    });
-                    resolve();
-                }, 200);
-            });
-        }
-        console.log(gif);
-        gif.on('finished', (blob) => {
-            console.log('finished', blob);
-            window.open(URL.createObjectURL(blob));
-        });
-        gif.render();
+        let current = 0;
 
-        // }, 3000)
+        return new Promise(async function addFrame(resolve) {
+            renderFunction(current / frames);
+
+            context.drawImage(element, 0, 0);
+
+            const data = context.getImageData(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            ).data;
+
+            const palette = [];
+
+            for (var j = 0, k = 0, jl = data.length; j < jl; j += 4, k++) {
+                const r = Math.floor(data[j + 0] * 0.1) * 10;
+                const g = Math.floor(data[j + 1] * 0.1) * 10;
+                const b = Math.floor(data[j + 2] * 0.1) * 10;
+                const color = (r << 16) | (g << 8) | (b << 0);
+
+                const index = palette.indexOf(color);
+
+                if (index === -1) {
+                    pixels[k] = palette.length;
+                    palette.push(color);
+                } else {
+                    pixels[k] = index;
+                }
+            }
+
+            let powof2 = 1;
+            while (powof2 < palette.length) powof2 <<= 1;
+            palette.length = powof2;
+
+            const delay = 100 / fps;
+            const options = {
+                palette: new Uint32Array(palette),
+                delay: delay,
+            };
+            writer.addFrame(0, 0, canvas.width, canvas.height, pixels, options);
+
+            current++;
+            progress.value = current / frames;
+            console.log(current, frames);
+
+            if (current < frames) {
+                await setTimeout(addFrame, 0, resolve);
+            } else {
+                resolve(buffer.subarray(0, writer.end()));
+            }
+        });
     };
 
     useEffect(() => {
@@ -362,21 +384,13 @@ export default function ThreeComponent() {
         init();
         // 2. 获取详情
         getInfoDetail();
-        // 3. 加载canvas
-        generateGif();
-        // exportCurrentCanvas();
+        // 3. 注册生成gif操作
+        initGIFOperate();
     }, []);
 
     return (
         <>
             <div id="operate">
-                <button
-                    onClick={() => {
-                        exportCurrentCanvas();
-                    }}
-                >
-                    导出gif
-                </button>
                 <button
                     id="first"
                     onClick={() => {
@@ -423,7 +437,10 @@ export default function ThreeComponent() {
                 >
                     回填
                 </button>
+                <button id="generate-btn">导出gif</button>
+                <progress id="progress" value="0" max="1"></progress>
             </div>
+
             <div id="container" ref={container}></div>
         </>
     );
