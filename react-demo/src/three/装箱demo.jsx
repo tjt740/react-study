@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from 'react';
 
 // 导入动画库
 // import gsap from 'gsap';
-// mockData
 import { resData } from './taskDTO';
-import { mockData } from './mockData';
 
 // 导入gui
 import * as dat from 'dat.gui';
+
+import { GifWriter } from './gifjs/omggif';
 
 export default function ThreeComponent() {
     // 容器
@@ -21,18 +21,10 @@ export default function ThreeComponent() {
         45,
         window.innerWidth / window.innerHeight,
         1,
-        999999
+        5000
     );
-    1、 货物详情 
-2、 货物编号
-3、 货物正反面
-4、 删除gif功能 
-5、 外链方式展示
-6、 根据xy轴位置摆放箱子 
-
-
     //初始化网格
-    const grid = new THREE.GridHelper(15000, 20, 0x333333, 0x333333);
+    const grid = new THREE.GridHelper(1500, 15, 0x333333, 0x333333);
     // 选中子级盒子
     const mouse = new THREE.Vector3();
     const raycaster = new THREE.Raycaster();
@@ -43,7 +35,7 @@ export default function ThreeComponent() {
     });
     // 初始化轨道控制器
     const controls = new window.OrbitControls(camera, renderer.domElement);
-    const axesHelper = new THREE.AxesHelper(5000);
+    const axesHelper = new THREE.AxesHelper(1000);
     // gui
     const gui = new dat.GUI();
 
@@ -65,12 +57,14 @@ export default function ThreeComponent() {
         intersected,
         boxArr = [];
 
+    // 进度条
+    let progress; 
+
     // 初始化纸箱
     const initBox = (xLen, yLen, zLen) => {
         cartonWidth = xLen;
         cartonHeight = yLen;
         cartonLength = zLen;
-        
 
         // 声明几何体
         const geometry = new THREE.BoxGeometry(xLen, yLen, zLen);
@@ -78,15 +72,17 @@ export default function ThreeComponent() {
         const edges = new THREE.EdgesGeometry(geometry);
 
         // 几何体+ 材质 = 物体
-        const containerBox = new THREE.LineSegments(edges);
-
+        const containerBox = new THREE.LineSegments(
+            edges
+            // new THREE.LineBasicMaterial({ color: 0xffffff })
+        );
         containerBox.position.set(0, 0, 0);
 
         // 将物体添加到场景中
         scene.add(containerBox);
 
         // 添加网格
-        grid.position.y = -(cartonHeight /2) - cartonHeight / 8;
+        grid.position.y = -cartonHeight / 2 - 30;
         scene.add(grid);
 
         return containerBox;
@@ -144,37 +140,42 @@ export default function ThreeComponent() {
     // 获取详细数据
     const getInfoDetail = () => {
         // 获取详情
-        defaults['result'] = mockData;
+        defaults['result'] = resData;
         console.log('resData:', resData);
-        console.log('mockData:', mockData);    
+        for (var i = 0; i < resData.length; i++) {
+            defaults['dataList'][i] = resData[i];
+        }
+
         defaults['detailList'] = [];
 
-        const dataList = mockData;
+        const dataList = resData.at(0).cartonDTOList.at(0);
 
-        // 获取初始装货箱信息
-        const { width, height, length } = dataList.container.cube;
-        // 装货箱
-        initBox(width, height, length);
+        // 获取初始化纸箱
+        const { carton } = dataList;
+        const cartonMesh = initBox(carton.width, carton.height, carton.length);
+
+        defaults['cartonList'].push(cartonMesh);
+
+        defaults['cartonNum'] = defaults['result'].at(0).cartonDTOList.length;
         // 单个详情
-        detailIndex = defaults['detailNum'] = dataList.placedItems.length;
+        detailIndex = defaults['detailNum'] = dataList.detailList.length;
+
         // 渲染单个子级盒子
         boxArr = [];
         for (let i = 0; i < defaults['detailNum']; i++) {
-            const detail = dataList.placedItems[i];
-            
-                defaults['detailList'].push(
-                    initObject(
-                        detail.item.cube.width,
-                        detail.item.cube.height,
-                        detail.item.cube.length,
-                        detail.position.x,
-                        detail.position.y,
-                        detail.position.z,
-                        detail.orientation
-                    )
-                );
-            }
-        
+            const detail = dataList.detailList[i];
+            defaults['detailList'].push(
+                initObject(
+                    detail.width,
+                    detail.height,
+                    detail.length,
+                    detail.partX,
+                    detail.partY,
+                    detail.partZ,
+                    detail.partName
+                )
+            );
+        }
     };
 
     // 选中盒子
@@ -188,6 +189,7 @@ export default function ThreeComponent() {
         if (intersections.length > 0) {
             if (intersected) {
                 // 上一次选中的盒子
+                // const { r, g, b } = intersected.material.color;
                 boxArr.find((v) => v.uuid === intersected.uuid).material.color =
                     new THREE.Color(0x222222);
                 intersections.at(0).object.material.color = new THREE.Color(
@@ -225,7 +227,7 @@ export default function ThreeComponent() {
         // 场景颜色
         scene.background = new THREE.Color(0x999999);
         // 调整相机位置
-        camera.position.set(13100, 2200, 2100);
+        camera.position.set(window.innerHeight >= 900 ? 1800 : 1100, 180, 650);
         camera.up.x = 0;
         camera.up.y = 1;
         camera.up.z = 0;
@@ -236,9 +238,9 @@ export default function ThreeComponent() {
         });
         // Tjt: 可删除 gui
         const cameraGui = gui.addFolder('调整相机视角');
-        cameraGui.add(camera.position, 'x').min(1).max(20000).step(10);
-        cameraGui.add(camera.position, 'y').min(1).max(15000).step(10);
-        cameraGui.add(camera.position, 'z').min(1).max(15000).step(10);
+        cameraGui.add(camera.position, 'x').min(1).max(10000).step(10);
+        cameraGui.add(camera.position, 'y').min(1).max(10000).step(10);
+        cameraGui.add(camera.position, 'z').min(1).max(10000).step(10);
 
         scene.add(camera);
         raycaster.intersectObjects(scene.children);
@@ -277,11 +279,113 @@ export default function ThreeComponent() {
         });
     };
 
+    const initGIFOperate = () => {
+        const generateBtn = document.getElementById('generate-btn');
+         progress = document.getElementById('progress');
+
+        generateBtn.addEventListener('click', async function () {
+            generateBtn.style.display = 'none';
+            progress.style.display = '';
+
+            // 生成gif
+            const buffer = await generateGIF(
+                container.current.children[0],
+                render,
+                4,
+                30
+            );
+
+            generateBtn.style.display = '';
+            progress.style.display = 'none';
+
+            // 下载
+            const blob = new Blob([buffer], { type: 'image/gif' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'animation.gif';
+            link.dispatchEvent(new MouseEvent('click'));
+        });
+    };
+    // 生成gif
+    const generateGIF = (element, renderFunction, duration = 1, fps = 30) => {
+        const frames = duration * fps;
+
+        const canvas = document.createElement('canvas');
+        canvas.width = element.width;
+        canvas.height = element.height;
+
+        const context = canvas.getContext('2d');
+
+        const buffer = new Uint8Array(
+            canvas.width * canvas.height * frames * 5
+        );
+        const pixels = new Uint8Array(canvas.width * canvas.height);
+        const writer = new GifWriter(buffer, canvas.width, canvas.height, {
+            loop: 0,
+        });
+
+        let current = 0;
+
+        return new Promise(async function addFrame(resolve) {
+            renderFunction(current / frames);
+
+            context.drawImage(element, 0, 0);
+
+            const data = context.getImageData(
+                0,
+                0,
+                canvas.width,
+                canvas.height
+            ).data;
+
+            const palette = [];
+
+            for (var j = 0, k = 0, jl = data.length; j < jl; j += 4, k++) {
+                const r = Math.floor(data[j + 0] * 0.1) * 10;
+                const g = Math.floor(data[j + 1] * 0.1) * 10;
+                const b = Math.floor(data[j + 2] * 0.1) * 10;
+                const color = (r << 16) | (g << 8) | (b << 0);
+
+                const index = palette.indexOf(color);
+
+                if (index === -1) {
+                    pixels[k] = palette.length;
+                    palette.push(color);
+                } else {
+                    pixels[k] = index;
+                }
+            }
+
+            let powof2 = 1;
+            while (powof2 < palette.length) powof2 <<= 1;
+            palette.length = powof2;
+
+            const delay = 100 / fps;
+            const options = {
+                palette: new Uint32Array(palette),
+                delay: delay,
+            };
+            writer.addFrame(0, 0, canvas.width, canvas.height, pixels, options);
+
+            current++;
+            progress.value = current / frames;
+            console.log(current, frames);
+
+            if (current < frames) {
+                await setTimeout(addFrame, 0, resolve);
+            } else {
+                resolve(buffer.subarray(0, writer.end()));
+            }
+        });
+    };
+
     useEffect(() => {
         // 1. 初始化
         init();
         // 2. 获取详情
         getInfoDetail();
+        // 3. 注册生成gif操作
+        initGIFOperate();
     }, []);
 
     return (
@@ -333,6 +437,8 @@ export default function ThreeComponent() {
                 >
                     回填
                 </button>
+                <button id="generate-btn">导出gif</button>
+                <progress id="progress" value="0" max="1"></progress>
             </div>
 
             <div id="container" ref={container}></div>
