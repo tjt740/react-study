@@ -63,8 +63,8 @@ export const mockData = {
         {
             item: {
                 cube: {
-                    height: 1160,
-                    length: 1200,
+                    height: 560,
+                    length: 1400,
                     width: 1200,
                 },
                 id: 'EBD0100000074788',
