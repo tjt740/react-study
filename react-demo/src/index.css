@@ -11,3 +11,20 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+img{
+  width: 200px;
+  height: 200px;
+}
+.active{
+  background-color: rgb(237, 204, 205);
+}
+
+
+span {
+  /* color:rgb(0, 183, 255) */
+}
+
+p{
+  /* color:darkorange */
+}
