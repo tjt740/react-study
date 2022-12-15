@@ -28,9 +28,11 @@ import DayDownComponent from './lessons/demo/day-down-component';
 import UseMemoComponent from './lessons/hooks/usememo-component';
 import UseXxxx from './lessons/hooks/hook';
 import ReduxComponent from './lessons/redux/redux';
-
 import ThreeComponent from './three/index';
 import FormilyCom from './formily/index';
+
+import FatherCom from './lessons/father';
+import SonCom from './lessons/son';
 
 function App() {
     return (
@@ -113,10 +115,13 @@ function App() {
             {/*__________________________________________*/}
 
             {/* <ReduxComponent /> */}
-            <ThreeComponent></ThreeComponent>
+            {/* <ThreeComponent></ThreeComponent> */}
 
             {/* Formily */}
             {/* <FormilyCom/> */}
+
+            {/* 父取子/子传父 */}
+            <FatherCom />
         </div>
     );
 }
