@@ -1,0 +1,11 @@
+.form-container {
+    padding: 120px;
+}
+
+.ant-collapse-header {
+    display: flex !important;
+    align-items: center !important;
+}
+.ant-collapse-extra {
+    height: 32px;
+}

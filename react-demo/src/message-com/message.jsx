@@ -30,7 +30,7 @@ function Message({ root }) {
         message: '内容为空哦~',
     });
 
-    console.log(onClose, root);
+    // console.log(onClose, root);
 
     onClose = useCallback(() => {
         setConfig({

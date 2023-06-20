@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { List, Empty } from 'antd-mobile';
-import { QuestionCircleOutline } from 'antd-mobile-icons';
+// import { List, Empty } from 'antd-mobile';
+// import { QuestionCircleOutline } from 'antd-mobile-icons';
 
 import DayDownComponent from './demo/day-down-component';
 import dayjs from 'dayjs';
-
 const EmptyCom = () => {
     return (
         <>
-            <Empty
+            {/* <Empty
                 style={{ padding: '64px 0' }}
                 image={
                     <QuestionCircleOutline
@@ -19,7 +18,7 @@ const EmptyCom = () => {
                     />
                 }
                 description="暂无数据"
-            />
+            /> */}
         </>
     );
 };
@@ -34,11 +33,11 @@ const ListCom = () => {
 
     return (
         <>
-            <List header="基础用法">
+            {/* <List header="基础用法">
                 {arr.map((v, i) => {
                     return <List.Item key={i}>{v}</List.Item>;
                 })}
-            </List>
+            </List> */}
             {!arr.length && <EmptyCom />}
         </>
     );
@@ -51,12 +50,12 @@ class Test extends React.Component {
 
     componentDidMount() {
         const nowDate = dayjs().toDate().getTime();
-        this.setState({
-                expirationDate: (1659087056855 + 86400001 - nowDate) / 1000
-        },
+        this.setState(
+            {
+                expirationDate: (1659087056855 + 86400001 - nowDate) / 1000,
+            },
             () => {
-               
-                console.log(this.state)
+                console.log(this.state);
             }
         );
     }

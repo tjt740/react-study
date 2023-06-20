@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Button, Drawer, Tabs, Descriptions, Tree, Empty } from 'antd';
 import './index.css';
-import 'antd/dist/antd.css';
+
 import * as THREE from 'three';
 // 导入轨道控制器 只能通过这种方法
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
@@ -65,8 +65,8 @@ export default function ThreeComponent() {
     // 容器
     const container = useRef(null);
 
-      // 获取详细数据
-      const getInfoDetail = () => {
+    // 获取详细数据
+    const getInfoDetail = () => {
         // 获取详情
         defaults['result'] = mockData;
         defaults['detailList'] = [];
@@ -98,7 +98,7 @@ export default function ThreeComponent() {
     };
 
     // 初始化纸箱
-    const initBox = (xLen, yLen, zLen, context) => {   
+    const initBox = (xLen, yLen, zLen, context) => {
         setContainerContext(context);
         cartonWidth = xLen;
         cartonHeight = yLen;
@@ -108,7 +108,7 @@ export default function ThreeComponent() {
         // 声明材质;
         const edges = new THREE.EdgesGeometry(geometry);
         // 几何体+ 材质 = 物体
-        console.log(edges)
+        console.log(edges);
         const containerBox = new THREE.LineSegments(edges);
         containerBox.material.color = new THREE.Color(0x000000);
         containerBox.position.set(0, 0, 0);
