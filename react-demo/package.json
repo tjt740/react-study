@@ -13,6 +13,8 @@
     "dat.gui": "^0.7.9",
     "dayjs": "^1.11.4",
     "gsap": "^3.11.1",
+    "increase-memory-limit": "^1.0.7",
+    "localforage": "^1.10.0",
     "prop-types": "^15.8.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",

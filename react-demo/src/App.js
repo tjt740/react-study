@@ -15,6 +15,7 @@ import ChildrenComponent from './lessons/children-component';
 import PropsTypeComponent from './lessons/props-component';
 import DefaultPropsComponent from './lessons/default-props-component';
 import Lifecycle from './lessons/lifecycle-component';
+import Lifecycle2 from './lessons/lifecycle/lifecycle2.jsx';
 import UseStateComponent from './lessons/hooks/useState-components';
 import UseEffectComponent from './lessons/hooks/useEffect-component';
 import UseStateComponentOne from './lessons/hooks/usestate-one-component.jsx';
@@ -30,9 +31,13 @@ import UseXxxx from './lessons/hooks/hook';
 import ReduxComponent from './lessons/redux/redux';
 import ThreeComponent from './three/index';
 import FormilyCom from './formily/index';
-
 import FatherCom from './lessons/father';
 import SonCom from './lessons/son';
+// react 18 新特性
+
+import UseSyncExternalStore from './react-18/useSyncExternalStore';
+// 命令行创建组件 类似实现message.success()效果
+import MessageCom from './message-com';
 
 function App() {
     return (
@@ -40,88 +45,81 @@ function App() {
             {/* @函数组件 */}
             {/* <FnComponent></FnComponent> */}
             {/*__________________________________________*/}
-
             {/* @类组件 */}
             {/* <ClassComponent/> */}
             {/*__________________________________________*/}
-
             {/* <StateComponent/> */}
             {/*__________________________________________*/}
-
             {/* @事件 */}
             {/* <EventComponent></EventComponent> */}
             {/*__________________________________________*/}
-
             {/* @表单 */}
             {/* <FormComponent/> */}
             {/*__________________________________________*/}
-
             {/* @使用uuid函数 */}
             {/* <UuidComponent/>  */}
             {/*__________________________________________*/}
-
             {/* @组件传值  */}
             {/* <FatherToSonComponent /> */}
             {/* <SonToFatherComponent/> */}
             {/* <BrotherComponent/> */}
             {/* <ContextComponent /> */}
             {/*__________________________________________*/}
-
             {/* @传值DEMO练习 */}
             {/* <ChuanZhiDemoComponent/> */}
             {/*__________________________________________*/}
-
             {/* @组件children属性 */}
             {/* <ChildrenComponent/>  */}
             {/*__________________________________________*/}
-
             {/* @组件props校验 */}
             {/* <PropsTypeComponent/> */}
             {/*__________________________________________*/}
-
             {/* @组件propsm默认值 */}
             {/* <DefaultPropsComponent /> */}
             {/*__________________________________________*/}
-
             {/* @React 生命周期 */}
-            {/* { <Lifecycle/>  } */}
+            {/* {<Lifecycle />} */}
+            {/* <Lifecycle2 /> */}
             {/*__________________________________________*/}
-
             {/* @React Hooks */}
             {/* <UseStateComponent /> */}
             {/* <UseStateComponentOne /> */}
             {/* <UseEffectComponent/> */}
             {/* <UseEffectComponentOne/> */}
-
             {/* 7.5 */}
             {/* <UseRef/> */}
             {/* <UseContext /> */}
             {/* <UseCallback /> */}
-
             {/* <UseXxx/> */}
-
             {/* <Test /> */}
             {/*__________________________________________*/}
-
             {/* <DayDownComponent /> */}
             {/*__________________________________________*/}
-
-            {/* <UseMemoComponent/> */}
-
+            {/* <UseMemoComponent /> */}
             {/*__________________________________________*/}
-
             {/* <UseXxxx/> */}
-
             {/*__________________________________________*/}
 
             {/* <ReduxComponent /> */}
             {/* <ThreeComponent></ThreeComponent> */}
+            {/*__________________________________________*/}
 
             {/* Formily */}
             {/* <FormilyCom/> */}
+            {/*__________________________________________*/}
 
             {/* 父取子/子传父 */}
-            <FatherCom />
+            {/* <FatherCom /> */}
+            {/*__________________________________________*/}
+
+            {/* react-18 start */}
+            {/* <UseSyncExternalStore /> */}
+            {/*__________________________________________*/}
+
+            {/* react-18 end */}
+            {/*__________________________________________*/}
+
+            <MessageCom />
         </div>
     );
 }

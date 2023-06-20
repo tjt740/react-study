@@ -1,32 +1,28 @@
-
 // Step1️⃣ 引入useMemo函数
 import React, { useMemo, useEffect } from 'react';
 
 const ComA = (props) => {
     const { fatherNum } = props;
 
-    //Step4️⃣ 监听父级参数变化,父级参数变化时就触发，并return 内容 
-     
+    //Step4️⃣ 监听父级参数变化,父级参数变化时就触发，并return 内容
+
     const fnMemo1 = useMemo(() => {
         console.log('🍗 触发!', fatherNum);
         if (fatherNum >= 3) return `fatherNum >= 3`;
-        return `监听fatherNum 变化 `
+        return `监听fatherNum 变化 `;
     }, [fatherNum]);
 
-     // 🔊 只会执行一次,避免重复渲染
+    // 🔊 只会执行一次,避免重复渲染
     const fnMemo2 = useMemo(() => {
-        return `只会执行一次`
-    }, [])
-
+        return `只会执行一次`;
+    }, []);
 
     // 🔊 🔴 useMemo和useEffect 区别
     useEffect(() => {
         console.log(`useEffect和useMemo最大的区别在于:
             1. useEffect没有返回值,useMemo有返回值。
-            2.useEffect没有返回值(在不考虑解绑的情况下), 并且是在页面渲染之后才执行的, 而useMemo有返回值, 并且是在页面渲染的时候进行的`
-        )
-    }, [])
-
+            2.useEffect没有返回值(在不考虑解绑的情况下), 并且是在页面渲染之后才执行的, 而useMemo有返回值, 并且是在页面渲染的时候进行的`);
+    }, []);
 
     return (
         <>
@@ -34,7 +30,7 @@ const ComA = (props) => {
             <h2>{fnMemo1}</h2>
             <h3>{fnMemo2}</h3>
         </>
-    )
+    );
 };
 
 const ComB = React.memo(
