@@ -34,7 +34,7 @@ import FormilyCom from './formily/index';
 import FatherCom from './lessons/father';
 import SonCom from './lessons/son';
 // react 18 新特性
-
+import UseImmer from './react-18/useImmer';
 import UseSyncExternalStore from './react-18/useSyncExternalStore';
 // 命令行创建组件 类似实现message.success()效果
 import MessageCom from './message-com';
@@ -115,11 +115,11 @@ function App() {
             {/* react-18 start */}
             {/* <UseSyncExternalStore /> */}
             {/*__________________________________________*/}
-
+            <UseImmer></UseImmer>
             {/* react-18 end */}
             {/*__________________________________________*/}
 
-            <MessageCom />
+            {/* <MessageCom /> */}
         </div>
     );
 }
