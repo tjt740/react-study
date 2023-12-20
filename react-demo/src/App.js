@@ -38,6 +38,7 @@ import UseImmer from './react-18/useImmer';
 import UseSyncExternalStore from './react-18/useSyncExternalStore';
 // 命令行创建组件 类似实现message.success()效果
 import MessageCom from './message-com';
+import Usequery from './react-18/usequery';
 
 function App() {
     return (
@@ -115,7 +116,8 @@ function App() {
             {/* react-18 start */}
             {/* <UseSyncExternalStore /> */}
             {/*__________________________________________*/}
-            <UseImmer></UseImmer>
+            {/* <UseImmer></UseImmer> */}
+            <Usequery />
             {/* react-18 end */}
             {/*__________________________________________*/}
 
