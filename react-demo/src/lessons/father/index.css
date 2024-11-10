@@ -1,0 +1,15 @@
+h1 {
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    background-color: greenyellow;
+}
+
+/* div{
+    display: inline-block;
+} */
+h2 {
+    width: 150px;
+    height: 100px;
+    background-color: tomato;
+}
